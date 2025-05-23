@@ -232,10 +232,7 @@ router.get('/google/callback',
 let otpStore = {};
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
     service: "gmail",
-    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
@@ -244,10 +241,9 @@ const transporter = nodemailer.createTransport({
 
 router.post("/send-otp", (req, res) => {
     const { email } = req.body;
-    console.log(email.email)
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    otpStore[email] = { otp, expires: Date.now() + 300000 };
+    otpStore[email] = { otp, expires: Date.now() + 300000 }; // 5 minutes
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
@@ -257,11 +253,12 @@ router.post("/send-otp", (req, res) => {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-        console.log(error)
         if (error) return res.status(500).json({ error: "Failed to send email" });
         res.json({ message: "OTP sent successfully" });
     });
 });
+
+
 
 router.post("/verify-otp", (req, res) => {
     const { email, otp } = req.body;
@@ -271,11 +268,9 @@ router.post("/verify-otp", (req, res) => {
         return res.status(400).json({ error: "Invalid or expired OTP" });
     }
 
-    delete otpStore[email];
+    delete otpStore[email]; // OTP can be used once
     res.json({ message: "OTP verified successfully" });
 });
-
-
 
 module.exports = router;
 

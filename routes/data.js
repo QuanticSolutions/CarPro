@@ -5,1108 +5,6 @@ const db = require("../database/connection");
 router.post('/models', async (req, res) => {
 //   const { data } = req.body;
      const data = [
-        "Abarth 124",
-        "Abarth 595",
-        "Abarth 500e",
-        "Abarth 1999",
-        "Abarth F595",
-        "Abarth 695",
-        "Abarth Other",
-        "Acura CSX/EL",
-        "Acura MDX",
-        "Acura ILX",
-        "Acura RSX/Integra",
-        "Acura Other",
-        "Acura RDX",
-        "Acura NSX",
-        "Acura TLX",
-        "AITO M7",
-        "AITO M5",
-        "AITO M9",
-        "Alfa Romeo Tonale",
-        "Alfa Romeo GIULIETTA",
-        "Alfa Romeo Mito",
-        "Alfa Romeo GTV/GT",
-        "Alfa Romeo Other",
-        "Alfa Romeo Giulia",
-        "Alfa Romeo 8C",
-        "Alfa Romeo 4C",
-        "Alfa Romeo 156/159",
-        "Alfa Romeo Spider",
-        "Alfa Romeo Brera",
-        "Alfa Romeo 166",
-        "Alfa Romeo 145/146/147",
-        "Alfa Romeo Stelvio",
-        "Ariel Atom",
-        "Ashok Leyland Falcon",
-        "Ashok Leyland Oyster",
-        "Ashok Leyland GAZL",
-        "Ashok Leyland Partner",
-        "Aston Martin DBX",
-        "Aston Martin Lagonda",
-        "Aston Martin DB10",
-        "Aston Martin Valkyrie",
-        "Aston Martin Vulcan",
-        "Aston Martin One-77",
-        "Aston Martin Rapide",
-        "Aston Martin DB11",
-        "Aston Martin Zagato",
-        "Aston Martin DB7",
-        "Aston Martin DB9",
-        "Aston Martin DBS",
-        "Aston Martin Virage",
-        "Aston Martin Other",
-        "Aston Martin DB12",
-        "Aston Martin Vanquish",
-        "Aston Martin Cygnet",
-        "Aston Martin Vantage",
-        "Audi S3/RS3",
-        "Audi A1",
-        "Audi Q3",
-        "Audi Q5",
-        "Audi A4",
-        "Audi A7",
-        "Audi SQ8",
-        "Audi Q2",
-        "Audi A5",
-        "Audi A8",
-        "Audi SQ7",
-        "Audi TT",
-        "Audi A6",
-        "Audi Q7",
-        "Audi RS Q8",
-        "Audi e-tron",
-        "Audi S8",
-        "Audi S7/RS7",
-        "Audi S5",
-        "Audi S5/RS5",
-        "Audi S6/RS6",
-        "Audi SQ5",
-        "Audi R8",
-        "Audi S4/RS4",
-        "Audi S3",
-        "Audi RS e-tron",
-        "Audi Q8",
-        "Audi RSQ3",
-        "Audi Other",
-        "Audi A3",
-        "Aurus Senat",
-        "Austin-Healey Other",
-        "Austin-Healey 3000",
-        "Avatr 11",
-        "Avatr 07",
-        "Avatr Other",
-        "Avatr 12",
-        "BAC Mono",
-        "BAIC MZ40",
-        "BAIC BJ60",
-        "BAIC X7",
-        "BAIC A1",
-        "BAIC X55",
-        "BAIC A113",
-        "BAIC K21",
-        "BAIC BJ40 SE",
-        "BAIC A523",
-        "BAIC A5",
-        "BAIC A115",
-        "BAIC D20",
-        "BAIC BJ40 C",
-        "BAIC Other",
-        "BAIC F40",
-        "BAIC BJ40L",
-        "BAIC BJ80",
-        "BAIC X424",
-        "BAIC MZ45",
-        "BAIC X35",
-        "BAW 212 T01",
-        "BAW MPV",
-        "BAW Pick up",
-        "BAW Small Truck",
-        "Bentley Azure",
-        "Bentley Brooklands",
-        "Bentley Continental",
-        "Bentley Other",
-        "Bentley Mulsanne",
-        "Bentley Arnage",
-        "Bentley Bentayga",
-        "Bentley Flying Spur",
-        "Bentley Onyx Other",
-        "Bentley Onyx GTX II",
-        "Bentley Onyx GTX 4x4",
-        "Bentley Onyx GTX III",
-        "Bentley Onyx GTX I",
-        "Bestune B30",
-        "Bestune B70S",
-        "Bestune X80",
-        "Bestune Other",
-        "Bestune B50",
-        "Bestune B70",
-        "Bestune T77",
-        "Bestune X40",
-        "Bestune T55",
-        "Bestune T99",
-        "Bestune T33",
-        "Bestune B90",
-        "Bestune T77 Pro",
-        "Bizzarrini Other",
-        "BMW 4-Series",
-        "BMW M1",
-        "BMW Other",
-        "BMW M8",
-        "BMW iX",
-        "BMW X6",
-        "BMW X5",
-        "BMW X1",
-        "BMW M4",
-        "BMW Z3",
-        "BMW 8-Series",
-        "BMW iX3",
-        "BMW Z4",
-        "BMW M5",
-        "BMW M-Coupe",
-        "BMW 3-Series",
-        "BMW M-Roadster",
-        "BMW 7-Series",
-        "BMW X7",
-        "BMW M2",
-        "BMW Z8",
-        "BMW i8",
-        "BMW 2-Series",
-        "BMW 6-Series",
-        "BMW iX1",
-        "BMW i4",
-        "BMW i5",
-        "BMW M3",
-        "BMW iX2",
-        "BMW i3",
-        "BMW M6",
-        "BMW X3",
-        "BMW XM",
-        "BMW X2",
-        "BMW 1-Series",
-        "BMW i7",
-        "BMW 5-Series",
-        "BMW Z1",
-        "BMW X4",
-        "BMW Alpina D4",
-        "BMW Alpina XB7",
-        "BMW Alpina B3",
-        "BMW Alpina B7",
-        "BMW Alpina B8",
-        "BMW Alpina D4 S",
-        "BMW Alpina D5",
-        "BMW Alpina XD3",
-        "BMW Alpina B5 GT",
-        "BMW Alpina B5",
-        "BMW Alpina D3S",
-        "BMW Alpina B6",
-        "BMW Alpina D5 S",
-        "BMW Alpina XD4",
-        "BMW Alpina B4",
-        "BMW Alpina D3",
-        "Borgward BX7",
-        "Borgward BX5",
-        "Brilliance V5",
-        "Brilliance FRV",
-        "Brilliance V6",
-        "Brilliance V7",
-        "Brilliance H530",
-        "Bufori Geneva",
-        "Bufori Other",
-        "Bufori MK III",
-        "Bugatti Veyron",
-        "Bugatti Chiron",
-        "Bugatti Other",
-        "Bugatti Veyron 16.4",
-        "Bugatti Divo",
-        "Bugatti Grand Sport",
-        "Bugatti Grand Sport Vitesse",
-        "Bugatti Super Sport",
-        "Buick Riviera",
-        "Buick Other",
-        "BYD F3",
-        "BYD Song Plus",
-        "BYD Yuan Plus",
-        "BYD HAN",
-        "BYD ATTO 3",
-        "BYD Qin Plus",
-        "BYD Qin Pro",
-        "BYD Yangwang U8",
-        "BYD SEALION",
-        "BYD Other",
-        "BYD e2",
-        "BYD SEALION 7",
-        "BYD Seagull",
-        "BYD BYD",
-        "BYD Qin",
-        "BYD Leopard 8",
-        "BYD Leopard",
-        "BYD XIA",
-        "BYD Song Pro",
-        "BYD Yuan up",
-        "BYD Qin L",
-        "BYD Tengshi D9",
-        "BYD F5",
-        "BYD Seal",
-        "BYD Song L",
-        "BYD F7",
-        "BYD F6",
-        "BYD Leopard 5",
-        "BYD S6",
-        "BYD Dolphin",
-        "BYD Tang",
-        "Cadillac Escalade",
-        "Cadillac XT4",
-        "Cadillac XTR/Eldorado",
-        "Cadillac Other",
-        "Cadillac XTS",
-        "Cadillac SLS",
-        "Cadillac BLS",
-        "Cadillac ATS",
-        "Cadillac DTS/De Ville",
-        "Cadillac SRX",
-        "Cadillac XT6",
-        "Cadillac CT5",
-        "Cadillac Lyriq",
-        "Cadillac Fleetwood",
-        "Cadillac CTS/Catera",
-        "Cadillac STS/Seville",
-        "Cadillac CT6",
-        "Cadillac XLR",
-        "Cadillac CT4",
-        "Cadillac XT5",
-        "Can-am Maverick X3",
-        "Can-am Maverick",
-        "Caterham Seven 360",
-        "Caterham Other",
-        "Caterham CSR",
-        "Caterham Seven 270",
-        "Caterham Seven 165",
-        "Caterham Seven 420",
-        "Caterham 620 R",
-        "CEVO C",
-        "Changan CS75",
-        "Changan CS75 Plus",
-        "Changan Eado Plus",
-        "Changan Other",
-        "Changan Uni-V",
-        "Changan CS35 Plus",
-        "Changan Eado",
-        "Changan CS35",
-        "Changan E-Star",
-        "Changan UNI-K",
-        "Changan Alsvin",
-        "Changan X5 Plus",
-        "Changan Alsvin V7",
-        "Changan Lumin",
-        "Changan Uni-T",
-        "Changan CS95",
-        "Changan Starlight",
-        "Changan CS85",
-        "Changan Deepal G318",
-        "Chery Tiggo 9",
-        "Chery Other",
-        "Chery A11",
-        "Chery E8",
-        "Chery Tiggo7 Pro",
-        "Chery Arrizo 5",
-        "Chery AIQAR",
-        "Chery T11",
-        "Chery Tiggo8 Pro",
-        "Chery Tiggo 7",
-        "Chery iCar",
-        "Chery Arrizo 3",
-        "Chery Tiggo 4",
-        "Chery QQ",
-        "Chery S11",
-        "Chery V5",
-        "Chery Arrizo 8",
-        "Chery Tiggo 3",
-        "Chery Tiggo 8",
-        "Chery Arrizo 7",
-        "Chery Tiggo 5",
-        "Chery iCar 03",
-        "Chery E5",
-        "Chery B11",
-        "Chevrolet Express",
-        "Chevrolet Avalanche",
-        "Chevrolet Aveo",
-        "Chevrolet Optra",
-        "Chevrolet Colorado",
-        "Chevrolet Bel Air",
-        "Chevrolet Groove",
-        "Chevrolet Chevelle",
-        "Chevrolet Spark",
-        "Chevrolet Equinox",
-        "Chevrolet Explorer",
-        "Chevrolet T-Series",
-        "Chevrolet Malibu",
-        "Chevrolet Pickup",
-        "Chevrolet Cruze",
-        "Chevrolet Silverado",
-        "Chevrolet Monza",
-        "Chevrolet Trax",
-        "Chevrolet Menlo",
-        "Chevrolet Other",
-        "Chevrolet Cavalier",
-        "Chevrolet HHR",
-        "Chevrolet Trailblazer",
-        "Chevrolet Sonic",
-        "Chevrolet Astro",
-        "Chevrolet SSR",
-        "Chevrolet Captiva",
-        "Chevrolet Traverse",
-        "Chevrolet Corvette",
-        "Chevrolet CSV",
-        "Chevrolet Nova",
-        "Chevrolet Epica",
-        "Chevrolet Camaro",
-        "Chevrolet Impala",
-        "Chevrolet Camaro Convertible",
-        "Chevrolet Apache",
-        "Chevrolet Lumina",
-        "Chevrolet Caprice",
-        "Chevrolet Suburban",
-        "Chevrolet Tahoe",
-        "Chevrolet Blazer",
-        "Chevrolet Monte Carlo",
-        "Chevrolet Uplander",
-        "Chevrolet Bolt",
-        "Chrysler Pacifica",
-        "Chrysler Concorde",
-        "Chrysler Neon",
-        "Chrysler Sebring",
-        "Chrysler 300",
-        "Chrysler Voyager/Caravan",
-        "Chrysler 300S",
-        "Chrysler 300C",
-        "Chrysler Prowler",
-        "Chrysler PT Cruiser",
-        "Chrysler Crossfire",
-        "Chrysler 300M/300C",
-        "Chrysler 200/200C EV",
-        "Chrysler Other",
-        "Chrysler 300M",
-        "Citroen C4",
-        "Citroen C2",
-        "Citroen DS 3",
-        "Citroen DS 5",
-        "Citroen DS 4",
-        "Citroen C-Elysee",
-        "Citroen Jumper",
-        "Citroen DS 21",
-        "Citroen Other",
-        "Citroen Berlingo",
-        "Citroen SpaceTourer",
-        "Citroen Traction Avant",
-        "Citroen C3",
-        "Citroen Saxo",
-        "Citroen AX",
-        "Citroen C8",
-        "Citroen Xsara Picasso",
-        "Citroen C5",
-        "Citroen Jumpy",
-        "CMC Other",
-        "CMC Veryca",
-        "CMC Z7",
-        "Cupra Formentor",
-        "Cupra Other",
-        "Dacia Sandero",
-        "Daewoo Lanos",
-        "Daewoo Nubira",
-        "Daewoo Other",
-        "Daewoo Musso",
-        "Daewoo Leganza",
-        "Daewoo Matiz",
-        "Daihatsu Terios",
-        "Daihatsu Materia",
-        "Daihatsu Other",
-        "Daihatsu Rocky",
-        "Daihatsu Sirion",
-        "Daihatsu Gran Max",
-        "Daihatsu Charade",
-        "Daihatsu YRV",
-        "Dallara Stradale",
-        "Dallara Other",
-        "Datsun 240Z",
-        "Datsun 280Z",
-        "Datsun 280ZX",
-        "Datsun 810",
-        "Dayun Yuehu",
-        "DeLorean Other",
-        "Denza Z9 GT",
-        "Denza D9",
-        "Devinci Marianne",
-        "Devinci Eugenie",
-        "Devinci Brigitte",
-        "Devinci Adele",
-        "DFSK Landian E5",
-        "DFSK Fengguang 580",
-        "DFSK Fengon 580",
-        "DFSK G7",
-        "DFSK Fengguang 580 Pro",
-        "DFSK Glory i-Auto",
-        "DFSK v21",
-        "DFSK Glory 580 Pro",
-        "DFSK Glory 580",
-        "Dodge Magnum",
-        "Dodge Charger",
-        "Dodge Other",
-        "Dodge Journey",
-        "Dodge Caliber",
-        "Dodge Pickup",
-        "Dodge Avenger",
-        "Dodge Challenger",
-        "Dodge Van",
-        "Dodge Caravan",
-        "Dodge Nitro",
-        "Dodge Dakota",
-        "Dodge Dart",
-        "Dodge Ram",
-        "Dodge Stealth",
-        "Dodge Neon",
-        "Dodge Coronet",
-        "Dodge Durango",
-        "Dodge Viper",
-        "DongFeng Paladin",
-        "DongFeng DFSK V22",
-        "DongFeng H30 Cross",
-        "DongFeng S30",
-        "DongFeng HUGE",
-        "DongFeng Other",
-        "DongFeng DFSK V21",
-        "DongFeng M-Hero 917",
-        "DongFeng AX7",
-        "DongFeng T5",
-        "DongFeng RICH 7",
-        "Dorcen G60S",
-        "Dorcen G60",
-        "Dorcen G70",
-        "Dorcen Domy X5",
-        "Dorcen G70S",
-        "Dorcen Domy X7",
-        "Entegra Ethos",
-        "Equus Bass 770",
-        "Exeed Other",
-        "Exeed TXL",
-        "Exeed LX",
-        "Exeed RX",
-        "Exeed VX",
-        "Faw Oley",
-        "Fengon IX7",
-        "Fengon 600",
-        "Fengon IX5",
-        "Fengon 580",
-        "Fengon 500",
-        "Fenyr SuperSport",
-        "Ferrari 812 Superfast",
-        "Ferrari 512",
-        "Ferrari 430",
-        "Ferrari 812 GTS",
-        "Ferrari 458",
-        "Ferrari 575M Maranello",
-        "Ferrari Daytona",
-        "Ferrari Ferrari Enzo",
-        "Ferrari 246 Dino",
-        "Ferrari FF",
-        "Ferrari 488",
-        "Ferrari SF90 Stradale",
-        "Ferrari F80",
-        "Ferrari Roma",
-        "Ferrari 488 GTB",
-        "Ferrari 599",
-        "Ferrari California",
-        "Ferrari 488 Spider",
-        "Ferrari 458 Spider",
-        "Ferrari Monza",
-        "Ferrari LaFerrari",
-        "Ferrari 328",
-        "Ferrari Ferrari 456",
-        "Ferrari La Ferrari Aperta",
-        "Ferrari 599 GTB",
-        "Ferrari Portofino",
-        "Ferrari SF90 Spider",
-        "Ferrari 812",
-        "Ferrari Testarossa",
-        "Ferrari F8 Tributo",
-        "Ferrari 612 Scaglietti",
-        "Ferrari Icona",
-        "Ferrari 296 GTB",
-        "Ferrari 360",
-        "Ferrari F430",
-        "Ferrari California T",
-        "Ferrari 296 GTS",
-        "Ferrari F40",
-        "Ferrari 599 GTO",
-        "Ferrari 412",
-        "Ferrari F8 Spider",
-        "Ferrari 458 Italia",
-        "Ferrari 488 Pista Spider",
-        "Ferrari 458 Speciale Aperta",
-        "Ferrari Purosangue",
-        "Ferrari GTC4 Lusso",
-        "Ferrari 458 Speciale",
-        "Ferrari Other",
-        "Ferrari 348",
-        "Ferrari 355",
-        "Ferrari GTC4 Lusso T",
-        "Ferrari 308",
-        "Ferrari F12",
-        "Ferrari Super America",
-        "Ferrari Scaglietti",
-        "Ferrari 488 Pista",
-        "Ferrari F12 Berlinetta",
-        "Ferrari 12Cilindri",
-        "Ferrari Onyx F2X",
-        "Ferrari Onyx 8XX",
-        "Ferrari Onyx Other",
-        "Ferrari Onyx SFX",
-        "Fiat Sienna",
-        "Fiat 600",
-        "Fiat Fullback",
-        "Fiat 124 Spider",
-        "Fiat Tempra",
-        "Fiat Linea",
-        "Fiat 500e",
-        "Fiat Barchetta",
-        "Fiat Brava",
-        "Fiat Uno",
-        "Fiat Other",
-        "Fiat Fiorino",
-        "Fiat Marea",
-        "Fiat 500L",
-        "Fiat 500",
-        "Fiat Ducato",
-        "Fiat Bravo",
-        "Fiat Punto",
-        "Fiat 500X",
-        "Fisker Karma",
-        "Fisker Other",
-        "Force Traveller",
-        "Ford Bronco",
-        "Ford Other",
-        "Ford Explorer",
-        "Ford F-Series Pickup",
-        "Ford Mustang Mach-E",
-        "Ford Torino",
-        "Ford Ecosport",
-        "Ford Mustang",
-        "Ford Pickup",
-        "Ford Five Hundred",
-        "Ford Tourneo",
-        "Ford Fusion",
-        "Ford Shelby Cobra",
-        "Ford Aerostar",
-        "Ford Thunderbird",
-        "Ford Flex",
-        "Ford Mondeo",
-        "Ford Ranger",
-        "Ford Fiesta",
-        "Ford Excursion",
-        "Ford Crown Victoria",
-        "Ford Escort",
-        "Ford Super Duty",
-        "Ford Focus",
-        "Ford Edge",
-        "Ford Everest",
-        "Ford Maverick",
-        "Ford Expedition",
-        "Ford Figo",
-        "Ford F-Series",
-        "Ford Territory",
-        "Ford Van",
-        "Ford GT",
-        "Ford Escape",
-        "Ford Taurus",
-        "Ford Transit",
-        "Forthing Friday",
-        "Forthing S7",
-        "Forthing T5 Evo",
-        "Forthing Other",
-        "Forthing U-Tour",
-        "Forthing T5",
-        "Foton TUNLAND",
-        "Foton SUP",
-        "Foton Cargo Van",
-        "Foton View",
-        "Foton Other",
-        "GAC GA6",
-        "GAC GA4",
-        "GAC GS8",
-        "GAC Aion Y",
-        "GAC Other",
-        "GAC GS3",
-        "GAC GS4",
-        "GAC Aion Hyper",
-        "GAC GA3",
-        "GAC EMKOO",
-        "GAC GA8",
-        "GAC GS7",
-        "GAC GN8",
-        "GAC EMZOOM",
-        "GAC M8",
-        "GAC GN6",
-        "GAC EMPOW",
-        "GAC GS5",
-        "GAC Gonow Mini Buses",
-        "GAC Gonow M1/M2",
-        "GAC Gonow Troy 100/500",
-        "GAC Gonow Chiller Pickup",
-        "Geely Emgrand X7",
-        "Geely Emgrand 7",
-        "Geely Emgrand X7 Sport",
-        "Geely Emgrand",
-        "Geely Monjaro",
-        "Geely GC6",
-        "Geely GX2",
-        "Geely GC2",
-        "Geely Preface",
-        "Geely Geometry C",
-        "Geely Other",
-        "Geely Okvango",
-        "Geely Coolray",
-        "Geely GX3 Pro",
-        "Geely Starray",
-        "Geely Farizon",
-        "Geely Emgrand 8",
-        "Geely Tugella",
-        "Genesis GV70",
-        "Genesis Coupe",
-        "Genesis G80",
-        "Genesis GV80",
-        "Genesis GV60",
-        "Genesis G70",
-        "Genesis Other",
-        "Genesis G90",
-        "Genty Akylone",
-        "GMC Hummer",
-        "GMC Yukon",
-        "GMC Canyon",
-        "GMC Other",
-        "GMC Pickup",
-        "GMC Savana",
-        "GMC Terrain",
-        "GMC Acadia",
-        "GMC Suburban",
-        "GMC Jimmy",
-        "GMC Sierra",
-        "GMC Envoy",
-        "Grand Tiger Grandtiger Pickup",
-        "Great Wall Wingle 6",
-        "Great Wall Wey Gaoshan",
-        "Great Wall King Kong Poer",
-        "Great Wall Wingle 7",
-        "Great Wall King Kong",
-        "Great Wall Other",
-        "Great Wall Poer",
-        "Great Wall Wingle 5",
-        "Gumpert Apollo",
-        "Gumpert Explosion",
-        "Haval H9",
-        "Haval Dargo",
-        "Haval Other",
-        "Haval Jolion",
-        "Haval H8",
-        "Haval H2",
-        "Haval H6",
-        "Higer Other",
-        "Higer Coach",
-        "Higer Mini Bus",
-        "Hino 300",
-        "HiPhi Y",
-        "HiPhi Other",
-        "HiPhi Z",
-        "HiPhi X",
-        "Honda ZR-V",
-        "Honda Fit",
-        "Honda HR-V",
-        "Honda S2000",
-        "Honda Crosstour",
-        "Honda Jazz",
-        "Honda Accord",
-        "Honda Crider",
-        "Honda ENP2",
-        "Honda City",
-        "Honda Odyssey J",
-        "Honda Civic",
-        "Honda Pilot",
-        "Honda Passport",
-        "Honda Pickup",
-        "Honda Prelude",
-        "Honda CR-V",
-        "Honda Odyssey",
-        "Honda Other",
-        "Honda ENP1",
-        "Honda M-NV",
-        "Honda ENS1",
-        "Honda CR-Z",
-        "Honda Van",
-        "Honda Legend",
-        "Honda Element",
-        "Honda MR-V",
-        "Hongqi HS5",
-        "Hongqi HS3",
-        "Hongqi E-HS9",
-        "Hongqi H9",
-        "Hongqi E-QM5",
-        "Hongqi Ousado",
-        "Hongqi HS7",
-        "Hongqi H7",
-        "Hongqi Other",
-        "Hongqi H5",
-        "Hongqi HS9",
-        "Hummer H1",
-        "Hummer HX",
-        "Hummer H2",
-        "Hummer H3T",
-        "Hummer Other",
-        "Hummer H3",
-        "Hycan Other",
-        "Hycan Z03",
-        "Hyundai i10",
-        "Hyundai Staria",
-        "Hyundai Grandeur",
-        "Hyundai Tiburon",
-        "Hyundai i20",
-        "Hyundai Venue",
-        "Hyundai Other",
-        "Hyundai Centennial",
-        "Hyundai Sonata",
-        "Hyundai Veracruz",
-        "Hyundai Elantra",
-        "Hyundai Veloster",
-        "Hyundai Grand i10",
-        "Hyundai Getz",
-        "Hyundai Palisade",
-        "Hyundai Ioniq",
-        "Hyundai Matrix",
-        "Hyundai Tucson",
-        "Hyundai Santa Fe",
-        "Hyundai i30",
-        "Hyundai Casper",
-        "Hyundai Entourage",
-        "Hyundai H1",
-        "Hyundai Terracan",
-        "Hyundai Santa Cruz",
-        "Hyundai Grand Santa Fe",
-        "Hyundai Atos",
-        "Hyundai Accent",
-        "Hyundai Stargazer",
-        "Hyundai Galloper",
-        "Hyundai Excel",
-        "Hyundai H 100",
-        "Hyundai Avante",
-        "Hyundai Creta",
-        "Hyundai Kona",
-        "Hyundai Verna",
-        "Hyundai Mufasa",
-        "Hyundai Mighty",
-        "Hyundai Azera",
-        "Hyundai Genesis",
-        "Hyundai Trajet",
-        "Hyundai i40",
-        "Hyundai Coupe",
-        "Hyundai Porter",
-        "INEOS Grenadier",
-        "Infiniti FX50",
-        "Infiniti G-Series",
-        "Infiniti EX37",
-        "Infiniti Q45",
-        "Infiniti Q70",
-        "Infiniti G25",
-        "Infiniti QX80",
-        "Infiniti QX30",
-        "Infiniti Q50",
-        "Infiniti FX45/FX35",
-        "Infiniti I35/I30",
-        "Infiniti QX60",
-        "Infiniti J30",
-        "Infiniti Q60",
-        "Infiniti JX-Series",
-        "Infiniti QX55",
-        "Infiniti EX35",
-        "Infiniti M-Series",
-        "Infiniti QX70",
-        "Infiniti G35",
-        "Infiniti Other",
-        "Infiniti Q30",
-        "Infiniti G37",
-        "Infiniti Q40",
-        "Infiniti FX37",
-        "Infiniti QX50",
-        "Infiniti QX56",
-        "Infiniti QX4",
-        "International MXT",
-        "International CXT",
-        "Isuzu Axiom",
-        "Isuzu Trooper",
-        "Isuzu i-Series",
-        "Isuzu I Mark",
-        "Isuzu Impulse",
-        "Isuzu MU-X",
-        "Isuzu Rodeo",
-        "Isuzu Amigo",
-        "Isuzu D-Max",
-        "Isuzu Ascender",
-        "Isuzu Stylus",
-        "Isuzu Other",
-        "Isuzu Oasis",
-        "Iveco Daily",
-        "JAC Tourist Bus",
-        "JAC Other",
-        "JAC J4",
-        "JAC JS4",
-        "JAC S3 Plus",
-        "JAC S7",
-        "JAC JS6",
-        "JAC HK6730",
-        "JAC J7",
-        "JAC T8",
-        "JAC M1",
-        "JAC M5",
-        "JAC M4",
-        "JAC S3",
-        "JAC E30X",
-        "JAC City Bus",
-        "JAC T6 Pickup",
-        "JAC J6",
-        "JAC J5",
-        "JAECOO J7",
-        "JAECOO J8",
-        "Jaguar XKR",
-        "Jaguar E-Type",
-        "Jaguar XJS",
-        "Jaguar XJ-Series",
-        "Jaguar XE",
-        "Jaguar S-Type",
-        "Jaguar F-Type",
-        "Jaguar XJ",
-        "Jaguar XK8",
-        "Jaguar XF",
-        "Jaguar E-Pace",
-        "Jaguar F-Pace",
-        "Jaguar Other",
-        "Jaguar XK",
-        "Jaguar X-Type",
-        "Jaguar I-Pace",
-        "Jeep Patriot",
-        "Jeep Commanche",
-        "Jeep Other",
-        "Jeep Wrangler 4xe",
-        "Jeep Commander",
-        "Jeep Wrangler Unlimited",
-        "Jeep Cherokee",
-        "Jeep Grand Cherokee",
-        "Jeep Gladiator",
-        "Jeep Wrangler",
-        "Jeep Compass",
-        "Jeep Renegade",
-        "Jeep Grand Wagoneer",
-        "Jeep Liberty",
-        "Jeep Grand Cherokee L",
-        "Jetour X90 Plus",
-        "Jetour X70 S",
-        "Jetour T2 i-DM",
-        "Jetour X70",
-        "Jetour Dashing",
-        "Jetour X50",
-        "Jetour X90",
-        "Jetour Other",
-        "Jetour X95",
-        "Jetour X70 FL",
-        "Jetour X70 Plus",
-        "Jetour T2",
-        "Jetour T1",
-        "Jinbei DLX",
-        "Jinbei H2L Highroof",
-        "Jinbei Cargo Van",
-        "Ji Yue 01",
-        "Ji Yue Other",
-        "JMC Other",
-        "JMC Grand Avenue",
-        "JMC NKR",
-        "JMC NHR",
-        "Kaiyi Other",
-        "Kaiyi X7",
-        "Kaiyi X3",
-        "Kaiyi E5",
-        "Kaiyi X3 Pro",
-        "Kia Sedona",
-        "Kia Carnival",
-        "Kia Sephia",
-        "Kia Sonet",
-        "Kia K900",
-        "Kia Cerato",
-        "Kia Seltos",
-        "Kia EV6",
-        "Kia Mohave",
-        "Kia Niro",
-        "Kia Sportage",
-        "Kia Carens",
-        "Kia EV9",
-        "Kia Pegas",
-        "Kia Shuma",
-        "Kia KX1",
-        "Kia K9",
-        "Kia Oprius",
-        "Kia Sorento",
-        "Kia EV5",
-        "Kia Other",
-        "Kia Cadenza",
-        "Kia Optima",
-        "Kia Spectra",
-        "Kia Picanto",
-        "Kia Morning",
-        "Kia K8",
-        "Kia Bongo",
-        "Kia Koup",
-        "Kia Telluride",
-        "Kia Rio",
-        "Kia Soul",
-        "Kia K5",
-        "Kia Quoris",
-        "Kia Ray",
-        "Kia K3",
-        "Kia K5 HEV",
-        "Kia Forte",
-        "Kia Stinger",
-        "King Long Small Luxury Coach",
-        "King Long China Mini Van",
-        "King Long Luxury Coach",
-        "King Long Large Luxury Coach",
-        "King Long Medium Luxury Coach",
-        "King Long Other",
-        "King Long Coach",
-        "Koenigsegg CCGT",
-        "Koenigsegg CCR",
-        "Koenigsegg CC8S",
-        "Koenigsegg ONE:1",
-        "Koenigsegg Regera",
-        "Koenigsegg CCX",
-        "Koenigsegg CCXR",
-        "Koenigsegg Agera",
-        "Koenigsegg Jesko",
-        "Koenigsegg CC Prototype",
-        "KTM X-Bow",
-        "Lada Other",
-        "Lamborghini Revuelto",
-        "Lamborghini Murcielago",
-        "Lamborghini Centenario",
-        "Lamborghini Countach",
-        "Lamborghini Other",
-        "Lamborghini Aventador",
-        "Lamborghini Sián",
-        "Lamborghini Diablo",
-        "Lamborghini Huracan",
-        "Lamborghini Gallardo",
-        "Lamborghini Aventador S",
-        "Lamborghini Urus",
-        "Lamborghini 350 GT",
-        "Lamborghini Onyx Other",
-        "Lamborghini Onyx SX",
-        "Lancia Phedra",
-        "Lancia Stratos",
-        "Lancia FX-Series",
-        "Lancia Musa",
-        "Lancia Delta",
-        "Lancia Ypsilon",
-        "Lancia Other",
-        "Lancia Thesis",
-        "Land Rover Discovery",
-        "Land Rover Range Rover Evoque",
-        "Land Rover LR2",
-        "Land Rover LR3",
-        "Land Rover Defender",
-        "Land Rover LR4",
-        "Land Rover Range Rover Velar",
-        "Land Rover Discovery Sport",
-        "Land Rover Other",
-        "Land Rover Range Rover Sport",
-        "Land Rover Freelander",
-        "Land Rover Range Rover",
-        "Leapmotor C10",
-        "Leapmotor Other",
-        "Leapmotor T03",
-        "Leapmotor C16",
-        "Leapmotor S01",
-        "Leapmotor C11",
-        "Leapmotor C01",
-        "LEVC TX5",
-        "Lexus UX 200",
-        "Lexus RC",
-        "Lexus GX 470",
-        "Lexus LC 500",
-        "Lexus RX-Series",
-        "Lexus LM 350h",
-        "Lexus ES-Series",
-        "Lexus LM 300",
-        "Lexus RZ",
-        "Lexus LS-Series",
-        "Lexus LFA",
-        "Lexus SC-Series",
-        "Lexus Other",
-        "Lexus LX570",
-        "Lexus TX",
-        "Lexus CT-Series",
-        "Lexus GX 460",
-        "Lexus GX 550",
-        "Lexus LX-Series",
-        "Lexus LX600",
-        "Lexus GS-Series",
-        "Lexus RC F",
-        "Lexus IS-Series",
-        "Lexus UX-Series",
-        "Lexus NX-Series",
-        "Li Auto L8",
-        "Li Auto Other",
-        "Li Auto L6",
-        "Li Auto L9",
-        "Li Auto L7",
-        "Li Auto Mega",
-        "Lincoln Navigator",
-        "Lincoln Town Car",
-        "Lincoln MKT",
-        "Lincoln Corsair",
-        "Lincoln MKS",
-        "Lincoln MKZ",
-        "Lincoln MKC",
-        "Lincoln Other",
-        "Lincoln MKX",
-        "Lincoln Aviator",
-        "Lincoln LS",
-        "Lincoln Continental",
-        "Lincoln Nautilus",
-        "Livan X3 Pro",
-        "Lixiang L8",
-        "Lotus Emira",
-        "Lotus Eletre",
-        "Lotus Evora",
-        "Lotus Elan",
-        "Lotus Emeya",
-        "Lotus Elise",
-        "Lotus Exige",
-        "Lotus Esprit",
-        "Lotus Other",
-        "Lucid Air",
-        "Luxgen 7 SUV",
-        "Luxgen S5",
-        "Luxgen 7 MPV",
-        "Luxgen U6",
-        "Luxgen Other",
-        "Luxgen U7 Turbo",
-        "Lynk & Co Z10",
-        "Lynk & Co 05",
-        "Lynk & Co 01",
-        "Lynk & Co Z20",
-        "Lynk & Co 09",
-        "Lynk & Co Others",
-        "Mahindra XUV 500",
-        "Mahindra Scorpio Pickup",
-        "Maserati GranCabrio",
-        "Maserati Ghibli",
-        "Maserati Coupe",
-        "Maserati Levante",
-        "Maserati MC20",
         "Maserati Spyder",
         "Maserati 4200",
         "Maserati Grecale",
@@ -1800,7 +698,7 @@ router.post('/models', async (req, res) => {
   data.map(
     (obj) => {
         try {
-          db.query('INSERT INTO models (make, model) VALUES (?, ?)', [obj.split(' ')[0], obj.split(' ')[1]], (err, result)=>{
+          db.query('INSERT INTO models (make) VALUES (?)', obj, (err, result)=>{
               if (err) return res.status(500).json({ message: err });
           });
         } catch (err) {
@@ -1814,15 +712,1231 @@ router.post('/models', async (req, res) => {
 
 router.get('/models', async (req, res) => {
   try {
-    db.query('SELECT * FROM models', (err, result)=>{
+    db.query('SELECT * FROM models', (err, results)=>{
         if (err) return res.status(500).json({ message: err });
-        if(result.length == 0) return res.json([]);
-        res.json(result);
+        if(results.length == 0) return res.json([]);
+        res.json(results);
     });
   } catch (err) {
     console.error('Error fetching from database:', err);
     res.status(500).json({ error: 'Database error.' });
   }
 });
+
+router.post('/trims', (req, res) => {
+  const data = 
+[
+  {
+    "id": 815,
+    "model": "Kaiyi E5",
+    "trims": ["Other"]
+  },
+  {
+    "id": 816,
+    "model": "Kaiyi X3",
+    "trims": ["Flagship", "Luxury", "Other"]
+  },
+  {
+    "id": 817,
+    "model": "Kaiyi X7",
+    "trims": ["Other"]
+  },
+  {
+    "id": 818,
+    "model": "Kia Cadenza",
+    "trims": ["BAE", "Base", "DLX", "EX", "FOP", "GDi Mid", "GDi Top", "LX", "Mid", "MPI Base", "MPI Top", "STD", "Theta", "Top", "Other"]
+  },
+  {
+    "id": 819,
+    "model": "Kia Telluride",
+    "trims": ["EX", "GT Line", "GX", "LX", "S", "SX", "Telluride", "Other"]
+  },
+  {
+    "id": 820,
+    "model": "Kia K3",
+    "trims": ["Other"]
+  },
+  {
+    "id": 821,
+    "model": "Kia Spectra",
+    "trims": ["EX", "LX", "Other"]
+  },
+  {
+    "id": 822,
+    "model": "Kia Cerato",
+    "trims": ["Base", "EX", "GT-Line", "L", "LX", "LX Hatchback", "MPI Base", "MPI Top", "SX", "Other"]
+  },
+  {
+    "id": 823,
+    "model": "Kia Sonet",
+    "trims": ["Base", "EX", "EX1", "EX2", "GDI", "LX", "Mid", "Other"]
+  },
+  {
+    "id": 824,
+    "model": "Kia Shuma",
+    "trims": ["Other"]
+  },
+  {
+    "id": 825,
+    "model": "Kia K5",
+    "trims": ["Base", "GDI", "GDI EX", "GDT STD", "GT-Line", "LX", "LXS", "STD", "Other"]
+  },
+  {
+    "id": 826,
+    "model": "Kia Soul",
+    "trims": ["EX", "EX 2.0", "EX DLX", "EX FOP", "LX", "MPI", "S", "SX", "Other"]
+  },
+  {
+    "id": 827,
+    "model": "Kia Carnival",
+    "trims": ["Base", "EX", "EX FOB", "GDI EX", "GDI L", "Grand Carnival", "LX", "Other"]
+  },
+  {
+    "id": 828,
+    "model": "Kia Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 829,
+    "model": "Kia Sephia",
+    "trims": ["Other"]
+  },
+  {
+    "id": 830,
+    "model": "Kia K900",
+    "trims": ["GDI V6", "GDI V8", "Other"]
+  },
+  {
+    "id": 831,
+    "model": "Kia Seltos",
+    "trims": ["1.4T", "Base", "EX", "GT Line", "LX", "S", "SX", "Other"]
+  },
+  {
+    "id": 832,
+    "model": "Kia Stinger",
+    "trims": ["EX (2.0 L)", "GT (2.0 L)", "GT (3.3 L)", "GT-Line", "Other"]
+  },
+  {
+    "id": 833,
+    "model": "Kia EV6",
+    "trims": ["GT Line", "Other"]
+  },
+  {
+    "id": 834,
+    "model": "Kia Picanto",
+    "trims": ["Base", "EX", "EX FOP", "EX Plus", "GT", "LX", "Other"]
+  },
+  {
+    "id": 835,
+    "model": "Kia K5 HEV",
+    "trims": ["Other"]
+  },
+  {
+    "id": 836,
+    "model": "Kia Bongo",
+    "trims": ["2700", "4000", "Other"]
+  },
+  {
+    "id": 837,
+    "model": "Kia K9",
+    "trims": ["Other"]
+  },
+  {
+    "id": 838,
+    "model": "Kia EV9",
+    "trims": ["Air", "Earth", "GT-Line", "Land", "Light", "Light Long Range", "Wind"]
+  },
+  {
+    "id": 839,
+    "model": "Kia Koup",
+    "trims": ["SX", "SX FOP", "SX SO", "Other"]
+  },
+  {
+    "id": 840,
+    "model": "Kia Optima",
+    "trims": ["GTL", "Turbo", "T-GDI", "SX", "Sport", "Special Edition", "S", "LX DLX", "LX", "Base", "GDI Si", "GDI", "EX Top", "EX Premium", "EX Mid", "EX FOP", "EX DLX", "EX", "Other"]
+  },
+  {
+    "id": 841,
+    "model": "Kia EV5",
+    "trims": ["Air", "Earth", "GT-Line", "Land", "Light", "Wind", "Other"]
+  },
+  {
+    "id": 842,
+    "model": "Kia Niro",
+    "trims": ["EX", "HEV", "LX", "Other"]
+  },
+  {
+    "id": 843,
+    "model": "Kia Forte",
+    "trims": ["GT", "Other"]
+  },
+  {
+    "id": 844,
+    "model": "Kia Sportage",
+    "trims": ["Other"]
+  },
+  {
+    "id": 845,
+    "model": "Kia Mohave",
+    "trims": ["4.6L", "Base", "EX", "EX MID", "EX TOP", "LX", "Other"]
+  },
+  {
+    "id": 846,
+    "model": "Kia Carens",
+    "trims": ["1.4T", "Base", "EX", "EX DLX", "LX", "LX M", "SX", "Other"]
+  },
+  {
+    "id": 847,
+    "model": "Kia Pegas",
+    "trims": ["EX", "LX", "MPI", "MPI Top", "STD", "Other"]
+  },
+  {
+    "id": 848,
+    "model": "Kia KX1",
+    "trims": ["Other"]
+  },
+  {
+    "id": 849,
+    "model": "Kia Rio",
+    "trims": ["Base", "EX", "EX FOP", "EX MID", "EX TOP", "LX", "MPI", "MPI EX", "Sport", "Other"]
+  },
+  {
+    "id": 850,
+    "model": "Kia Sorento",
+    "trims": ["Base", "DLX", "DLX AWD", "EX", "EX DLX", "EX FOP", "EX STD", "EX STD AWD", "EX TOP", "LX", "SX", "Other"]
+  },
+  {
+    "id": 851,
+    "model": "Kia Oprius",
+    "trims": ["GL", "Other"]
+  },
+  {
+    "id": 852,
+    "model": "Kia Quoris",
+    "trims": ["GLS", "GLS Plus", "TOP", "Other"]
+  },
+  {
+    "id": 853,
+    "model": "Kia Ray",
+    "trims": ["1.0 gasoline", "EV", "EV Van"]
+  },
+  {
+    "id": 854,
+    "model": "Kia Morning",
+    "trims": ["Other"]
+  },
+  {
+    "id": 855,
+    "model": "Kia K8",
+    "trims": ["GDI", "GDI LX", "LX", "Other"]
+  },
+  {
+    "id": 856,
+    "model": "Kia Sedona",
+    "trims": ["EX", "EX FOB", "Grand Carnival", "LX", "Other"]
+  },
+  {
+    "id": 857,
+    "model": "King Long Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 858,
+    "model": "King Long Medium Luxury Coach",
+    "trims": ["Other"]
+  },
+  {
+    "id": 859,
+    "model": "King Long Large Luxury Coach",
+    "trims": ["Other"]
+  },
+  {
+    "id": 860,
+    "model": "King Long Coach",
+    "trims": ["Other"]
+  },
+  {
+    "id": 861,
+    "model": "King Long China Mini Van",
+    "trims": ["China Mini Van", "Other"]
+  },
+  {
+    "id": 862,
+    "model": "King Long Luxury Coach",
+    "trims": ["53 Seater", "Other"]
+  },
+  {
+    "id": 863,
+    "model": "King Long Small Luxury Coach",
+    "trims": ["33 Seater", "Other"]
+  },
+  {
+    "id": 864,
+    "model": "Koenigsegg Agera",
+    "trims": ["R", "RS", "S", "Standard", "Other"]
+  },
+  {
+    "id": 865,
+    "model": "Koenigsegg Jesko",
+    "trims": ["Other"]
+  },
+  {
+    "id": 866,
+    "model": "Koenigsegg CC8S",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 867,
+    "model": "Koenigsegg CCR",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 868,
+    "model": "Koenigsegg CCGT",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 869,
+    "model": "Koenigsegg CCXR",
+    "trims": ["Edition", "Special Edition", "Standard", "Trevita", "Other"]
+  },
+  {
+    "id": 870,
+    "model": "Koenigsegg CCX",
+    "trims": ["Edition", "Standard", "Other"]
+  },
+  {
+    "id": 871,
+    "model": "Koenigsegg Regera",
+    "trims": ["Other"]
+  },
+  {
+    "id": 872,
+    "model": "Koenigsegg CC Prototype",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 873,
+    "model": "Koenigsegg ONE:1",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 874,
+    "model": "KTM X-Bow",
+    "trims": ["Other"]
+  },
+  {
+    "id": 875,
+    "model": "Lada Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 876,
+    "model": "Lamborghini Sián",
+    "trims": ["FKP 37", "Roadster"]
+  },
+  {
+    "id": 877,
+    "model": "Lamborghini Revuelto",
+    "trims": ["Other"]
+  },
+  {
+    "id": 878,
+    "model": "Lamborghini Gallardo",
+    "trims": ["LP 570-4 Squadra Corse", "Lp550-2", "Lp550-2 Bicolore", "Lp550-2 Spyder", "Lp550-2 Valentino Balboni", "Lp560-4", "Lp560-4 Spyder", "Lp570-4 Spyder Performante", "Lp570-4 Super Trofeo Stradale", "Lp570-4 Superleggera", "Spyder", "Standard", "Other"]
+  },
+  {
+    "id": 879,
+    "model": "Lamborghini Murcielago",
+    "trims": ["Lp640", "Lp640 Roadster", "Lp650-4 Roadster", "Lp670-4 Superveloce", "Other"]
+  },
+  {
+    "id": 880,
+    "model": "Lamborghini Urus",
+    "trims": ["Performante", "Standard", "Other"]
+  },
+  {
+    "id": 881,
+    "model": "Lamborghini Aventador S",
+    "trims": ["Coupe", "Roadster"]
+  },
+  {
+    "id": 882,
+    "model": "Lamborghini Diablo",
+    "trims": ["Other"]
+  },
+  {
+    "id": 883,
+    "model": "Lamborghini Centenario",
+    "trims": ["Roadster"]
+  },
+  {
+    "id": 884,
+    "model": "Lamborghini Aventador",
+    "trims": ["Dreamliner Edition", "J", "LP 700-4", "LP 700-4 Pirelli Edition", "LP 700-4 Roadster", "LP 720-4 50 Anniversario", "LP 750-4 Superveloce", "LP 750-4 Superveloce Roadster", "LP 770-4 Superveloce Jota", "LP 770-4 Superveloce Jota Roadster", "LP 780-4 Roadster", "LP 780-4 Ultimae", "Standard", "Other"]
+  },
+  {
+    "id": 885,
+    "model": "Lamborghini Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 886,
+    "model": "Lamborghini Countach",
+    "trims": ["Other"]
+  },
+  {
+    "id": 887,
+    "model": "Lamborghini 350 GT",
+    "trims": ["Other"]
+  },
+  {
+    "id": 888,
+    "model": "Lamborghini Huracan",
+    "trims": ["Avio", "Coupe", "EVO Coupe", "EVO Spyder", "LP 580-2", "LP 580-2 Spyder", "LP 610-4", "LP 610-4 Spyder", "LP 620-2 Super Trofeo", "LP 680-4 Oakley Design", "Sterrato", "Tecnica", "Other"]
+  },
+  {
+    "id": 889,
+    "model": "Lamborghini Onyx Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 890,
+    "model": "Lamborghini Onyx SX",
+    "trims": ["Other"]
+  },
+  {
+    "id": 891,
+    "model": "Lancia Thesis",
+    "trims": ["Other"]
+  },
+  {
+    "id": 892,
+    "model": "Lancia FX-Series",
+    "trims": ["Other"]
+  },
+  {
+    "id": 893,
+    "model": "Lancia Phedra",
+    "trims": ["Other"]
+  },
+  {
+    "id": 894,
+    "model": "Lancia Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 895,
+    "model": "Lancia Stratos",
+    "trims": ["Other"]
+  },
+  {
+    "id": 896,
+    "model": "Lancia Musa",
+    "trims": ["Other"]
+  },
+  {
+    "id": 897,
+    "model": "Lancia Delta",
+    "trims": ["Other"]
+  },
+  {
+    "id": 898,
+    "model": "Lancia Ypsilon",
+    "trims": ["Other"]
+  },
+  {
+    "id": 899,
+    "model": "Land Rover Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 900,
+    "model": "Land Rover LR3",
+    "trims": ["Base", "HSE", "SE", "Other"]
+  },
+  {
+    "id": 901,
+    "model": "Land Rover Range Rover",
+    "trims": ["SE Dynamic", "Vogue Supercharged", "Vogue SE Supercharged", "Vogue SE", "Vogue LE Supercharged", "Vogue LE", "Vogue HSE", "Vogue First Edition", "Vogue", "UAE Edition", "SV Autobiography", "SV", "Supercharged", "Autobiography", "SE", "HSE V8", "HSE TOP", "HSE Royal", "HSE MID", "HSE LE", "HSE", "First Edition", "Fifty", "Autobiography Ultimate Edition", "Other"]
+  },
+  {
+    "id": 902,
+    "model": "Land Rover Range Rover Evoque",
+    "trims": ["Autobiography", "Dynamic", "Dynamic HSE", "Dynamic Plus", "Dynamic SE", "HSE", "Landmark Edition", "Prestige", "PURE", "R-Dynamic", "R-Dynamic HSE", "R-Dynamic SE", "S", "SE", "SE Plus", "Other"]
+  },
+  {
+    "id": 903,
+    "model": "Land Rover LR2",
+    "trims": ["HSE", "SE", "Other"]
+  },
+  {
+    "id": 904,
+    "model": "Land Rover Discovery",
+    "trims": ["First Edition", "HSE", "HSE Luxury", "R-Dynamic HSE", "S", "SC HSE Luxury", "SE", "Other"]
+  },
+  {
+    "id": 905,
+    "model": "Land Rover LR4",
+    "trims": ["HSE", "Landmark", "LE", "Limited Edition LR4 Pursuit", "SE", "Other"]
+  },
+  {
+    "id": 906,
+    "model": "Land Rover Freelander",
+    "trims": ["HSE", "SE", "Other"]
+  },
+  {
+    "id": 907,
+    "model": "Land Rover Defender",
+    "trims": ["Other"]
+  },
+  {
+    "id": 908,
+    "model": "Land Rover Discovery Sport",
+    "trims": ["HSE", "HSE Luxury", "Pure", "R-Dynamic SE", "S", "SE", "Other"]
+  },
+  {
+    "id": 909,
+    "model": "Land Rover Range Rover Velar",
+    "trims": ["Base", "Dynamic SE", "First Edition", "HSE", "P250 S", "P380 S", "R-Dynamic", "R-Dynamic HSE", "R-Dynamic S", "R-Dynamic SE", "S", "SE", "Other"]
+  },
+  {
+    "id": 910,
+    "model": "Land Rover Range Rover Sport",
+    "trims": ["Other"]
+  },
+  {
+    "id": 911,
+    "model": "Leapmotor C01",
+    "trims": ["EREV", "EV", "Pro+ Performance", "Other"]
+  },
+  {
+    "id": 912,
+    "model": "Leapmotor S01",
+    "trims": ["Other"]
+  },
+  {
+    "id": 913,
+    "model": "Leapmotor C16",
+    "trims": ["EREV", "EV", "Other"]
+  },
+  {
+    "id": 914,
+    "model": "Leapmotor C10",
+    "trims": ["EREV", "EV", "Other"]
+  },
+  {
+    "id": 915,
+    "model": "Leapmotor T03",
+    "trims": ["Other"]
+  },
+  {
+    "id": 916,
+    "model": "Leapmotor Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 917,
+    "model": "Leapmotor C11",
+    "trims": ["EREV", "EV", "EV 4WD", "Other"]
+  },
+  {
+    "id": 918,
+    "model": "LEVC TX5",
+    "trims": ["Vista", "Vista Comfort", "Vista Plus", "Other"]
+  },
+  {
+    "id": 919,
+    "model": "Lexus LM 300",
+    "trims": ["Other"]
+  },
+  {
+    "id": 920,
+    "model": "Lexus GS-Series",
+    "trims": ["Base", "Classic", "Exclusive", "F-sport", "Full Option", "GS F", "Navigation TOP", "Platinum", "Premier", "Prestige", "Titanium", "TOP", "Other"]
+  },
+  {
+    "id": 921,
+    "model": "Lexus LFA",
+    "trims": ["F-sport", "Other"]
+  },
+  {
+    "id": 922,
+    "model": "Lexus NX-Series",
+    "trims": ["NX 200", "NX 450H", "NX 350H", "NX 350 Premier", "NX 350", "NX 300 Premier", "NX 300 Platinum", "NX 300 F Sport", "NX 300", "NX 250", "NX 200t Premier", "NX 200t Platinum", "NX 200t F Sport Prestige", "NX 200t F Sport Platinum", "NX 200t", "350H Platinum", "Other"]
+  },
+  {
+    "id": 923,
+    "model": "Lexus RC",
+    "trims": ["200t", "200t F Sport Prestige", "300", "350 F Sport", "350 F Sport Platinum", "350 F Sport Prestige", "350 Platinum", "350 Premier", "Other"]
+  },
+  {
+    "id": 924,
+    "model": "Lexus UX 200",
+    "trims": ["F Sport Platinum", "F Sport Prestige", "Premier", "Other"]
+  },
+  {
+    "id": 925,
+    "model": "Lexus LX600",
+    "trims": ["F Sport"]
+  },
+  {
+    "id": 926,
+    "model": "Lexus TX",
+    "trims": ["350", "Other"]
+  },
+  {
+    "id": 927,
+    "model": "Lexus LM 350h",
+    "trims": ["Sports Luxury", "Takumi", "Other"]
+  },
+  {
+    "id": 928,
+    "model": "Lexus IS-Series",
+    "trims": ["F Sport", "Standard", "Sport", "Prestige", "Premier", "Platinum", "ISF KIT", "F Sport Prestige", "F Sport Platinum", "200t", "Exclusive", "Classic", "350 F Sport Platinum", "350", "300 Prestige", "300 Platinum", "300 F Sport", "300", "Other"]
+  },
+  {
+    "id": 929,
+    "model": "Lexus GX 460",
+    "trims": ["Luxury", "Off Road Edition", "Platinum", "Premier", "Premium", "Premium Plus", "Prestige", "Standard", "Other"]
+  },
+  {
+    "id": 930,
+    "model": "Lexus RC F",
+    "trims": ["Carbon", "F", "Platinum", "Sport", "Other"]
+  },
+  {
+    "id": 931,
+    "model": "Lexus LX-Series",
+    "trims": ["Platinum", "TOP", "Titanium", "Sport Titanium", "Sport Platinum", "Prestige-interpid", "Prestige", "Premier-interpid", "Premier", "Platinum-interpid", "570 Navigation Sport", "Navigation", "Full Option", "700h Signature", "700h Others", "700h F-Sport", "600 Ash Wood Edition", "570 Platinum Signature", "Other"]
+  },
+  {
+    "id": 932,
+    "model": "Lexus UX-Series",
+    "trims": ["UX 250", "UX 250 F Sport", "Other"]
+  },
+  {
+    "id": 933,
+    "model": "Lexus CT-Series",
+    "trims": ["Base", "F Sport", "Platinum", "Premier", "Prestige", "Other"]
+  },
+  {
+    "id": 934,
+    "model": "Lexus LX570",
+    "trims": ["Platinum", "Premier", "Premier Plus", "Prestige", "Signature", "Signature Black Edition", "Other"]
+  },
+  {
+    "id": 935,
+    "model": "Lexus ES-Series",
+    "trims": ["250", "250 Classic", "250 Platinum", "250 Premier", "300 h", "350 F SPORT", "Exclusive", "Full Option", "Platinum", "Premier", "Premier Plus", "Prestige", "Sport", "Standard", "Titanium", "Other"]
+  },
+  {
+    "id": 936,
+    "model": "Lexus GX 550",
+    "trims": ["Luxury", "Luxury Plus", "Other", "Overtrail", "Overtrail Plus", "Premium", "Premium Plus"]
+  },
+  {
+    "id": 937,
+    "model": "Lexus LC 500",
+    "trims": ["Carbon", "Hybrid", "Other", "Platinum", "Titanium"]
+  },
+  {
+    "id": 938,
+    "model": "Lexus Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 939,
+    "model": "Lexus RX-Series",
+    "trims": ["Limited", "TOP", "Titanium", "Prestige Limited", "Prestige", "Premier Plus", "Premier", "Platinum", "450 h", "Full Option", "F Sport", "Black Edition", "Base", "450H Prestige", "450H Platinum", "450H F Sport", "Other"]
+  },
+  {
+    "id": 940,
+    "model": "Lexus SC-Series",
+    "trims": ["SC 430", "Standard", "Other"]
+  },
+  {
+    "id": 941,
+    "model": "Lexus LS-Series",
+    "trims": ["Other"]
+  },
+  {
+    "id": 942,
+    "model": "Lexus GX 470",
+    "trims": ["Other"]
+  },
+  {
+    "id": 943,
+    "model": "Lexus RZ",
+    "trims": ["300e", "300e Luxury", "300e Premium", "450e", "450e Luxury", "450e Premium"]
+  },
+  {
+    "id": 944,
+    "model": "Li Auto L6",
+    "trims": ["Other"]
+  },
+  {
+    "id": 945,
+    "model": "Li Auto Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 946,
+    "model": "Li Auto Mega",
+    "trims": ["Other"]
+  },
+  {
+    "id": 947,
+    "model": "Li Auto L8",
+    "trims": ["Other"]
+  },
+  {
+    "id": 948,
+    "model": "Li Auto L7",
+    "trims": ["Other"]
+  },
+  {
+    "id": 949,
+    "model": "Li Auto L9",
+    "trims": ["Max", "Other"]
+  },
+  {
+    "id": 950,
+    "model": "Lincoln MKT",
+    "trims": ["Ecoboost", "Standard", "Other"]
+  },
+  {
+    "id": 951,
+    "model": "Lincoln MKX",
+    "trims": ["Luxury", "Premiere", "Reserve", "Select", "Standard", "Other"]
+  },
+  {
+    "id": 952,
+    "model": "Lincoln MKS",
+    "trims": ["AWD Ecoboost", "Ecoboost", "FWD V6", "Standard", "Other"]
+  },
+  {
+    "id": 953,
+    "model": "Lincoln MKZ",
+    "trims": ["Premiere", "Reserve", "Select", "Standard", "Other"]
+  },
+  {
+    "id": 954,
+    "model": "Lincoln MKC",
+    "trims": ["Premiere", "Reserve", "Select", "Other"]
+  },
+  {
+    "id": 955,
+    "model": "Lincoln Continental",
+    "trims": ["Premiere", "Presidential", "Reserve", "Select", "Other"]
+  },
+  {
+    "id": 956,
+    "model": "Lincoln Town Car",
+    "trims": ["Cartier", "Cartier L", "Designer", "Executive", "Signature", "Signature L", "Signature Limited", "Ultimate", "Ultimate L", "Other"]
+  },
+  {
+    "id": 957,
+    "model": "Lincoln Navigator",
+    "trims": ["Black Label", "EL", "L", "L AWD", "Presidential", "Reserve", "Reserve AWD", "Select", "Select AWD", "Standard", "Standard AWD", "Other"]
+  },
+  {
+    "id": 958,
+    "model": "Lincoln Aviator",
+    "trims": ["Base", "Luxury", "Premium", "Presidential", "Reserve", "Reserve II", "Standard", "Other"]
+  },
+  {
+    "id": 959,
+    "model": "Lincoln Corsair",
+    "trims": ["Base", "Premier", "Reserve", "Other"]
+  },
+  {
+    "id": 960,
+    "model": "Lincoln Nautilus",
+    "trims": ["Premier", "Presidential", "Reserve", "Reserve I", "Reserve II", "Reserve III", "Select", "Standard", "Other"]
+  },
+  {
+    "id": 961,
+    "model": "Lincoln LS",
+    "trims": ["Other"]
+  },
+  {
+    "id": 962,
+    "model": "Lincoln Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 963,
+    "model": "Livan X3 Pro",
+    "trims": ["Other"]
+  },
+  {
+    "id": 964,
+    "model": "Lixiang L8",
+    "trims": ["Other", "Ultra"]
+  },
+  {
+    "id": 965,
+    "model": "Lotus Eletre",
+    "trims": ["R", "S", "Standard", "Other"]
+  },
+  {
+    "id": 966,
+    "model": "Lotus Evora",
+    "trims": ["400", "Base", "GT", "GT410", "GT430", "S", "S Sport", "Sport", "Other"]
+  },
+  {
+    "id": 967,
+    "model": "Lotus Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 968,
+    "model": "Lotus Emeya",
+    "trims": ["Other"]
+  },
+  {
+    "id": 969,
+    "model": "Lotus Exige",
+    "trims": ["Base", "Cup 430", "Roadster", "S", "S Roadster", "Sport", "Sport 350", "Sport 410", "Standard", "Other"]
+  },
+  {
+    "id": 970,
+    "model": "Lotus Emira",
+    "trims": ["Base Edition", "First Edition", "Launch Edition", "Other"]
+  },
+  {
+    "id": 971,
+    "model": "Lotus Esprit",
+    "trims": ["Base", "Other"]
+  },
+  {
+    "id": 972,
+    "model": "Lotus Elan",
+    "trims": ["Other"]
+  },
+  {
+    "id": 973,
+    "model": "Lotus Elise",
+    "trims": ["Base", "R", "S", "SC", "Sport", "Other"]
+  },
+  {
+    "id": 974,
+    "model": "Lucid Air",
+    "trims": ["Dream Edition", "Grand Touring", "Pure", "Sapphire", "Touring", "Other"]
+  },
+  {
+    "id": 975,
+    "model": "Luxgen S5",
+    "trims": ["Standard", "Top", "Other"]
+  },
+  {
+    "id": 976,
+    "model": "Luxgen U7 Turbo",
+    "trims": ["Other"]
+  },
+  {
+    "id": 977,
+    "model": "Luxgen U6",
+    "trims": ["Standard", "Top", "Other"]
+  },
+  {
+    "id": 978,
+    "model": "Luxgen 7 MPV",
+    "trims": ["M/L", "P/L", "Other"]
+  },
+  {
+    "id": 979,
+    "model": "Luxgen Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 980,
+    "model": "Luxgen 7 SUV",
+    "trims": ["M/L", "P/L", "Other"]
+  },
+  {
+    "id": 981,
+    "model": "Lynk & Co 05",
+    "trims": ["Other"]
+  },
+  {
+    "id": 982,
+    "model": "Lynk & Co 01",
+    "trims": ["Other"]
+  },
+  {
+    "id": 983,
+    "model": "Lynk & Co Others",
+    "trims": ["Other"]
+  },
+  {
+    "id": 984,
+    "model": "Lynk & Co 09",
+    "trims": ["Other"]
+  },
+  {
+    "id": 985,
+    "model": "Lynk & Co Z10",
+    "trims": ["EV", "Other", "PHEV"]
+  },
+  {
+    "id": 986,
+    "model": "Lynk & Co Z20",
+    "trims": ["Other", "Standard"]
+  },
+  {
+    "id": 987,
+    "model": "Neta Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 988,
+    "model": "Neta Aya",
+    "trims": ["401 Lite", "Other"]
+  },
+  {
+    "id": 989,
+    "model": "Nio ES7",
+    "trims": ["Other"]
+  },
+  {
+    "id": 990,
+    "model": "Nio ES6",
+    "trims": ["Other"]
+  },
+  {
+    "id": 991,
+    "model": "Nio ES8",
+    "trims": ["Other"]
+  },
+  {
+    "id": 992,
+    "model": "Nissan Murano",
+    "trims": ["Base", "LE", "S", "SE", "SL", "Standard", "SV", "Other"]
+  },
+  {
+    "id": 993,
+    "model": "Nissan Patrol Pickup",
+    "trims": ["SGL AT", "SGL MT", "Other"]
+  },
+  {
+    "id": 994,
+    "model": "Nissan Gloria",
+    "trims": ["Other"]
+  },
+  {
+    "id": 995,
+    "model": "Nissan Ariya",
+    "trims": ["Empower+", "Engage", "Engage e-4orce", "Evolve+ e-4orce", "Long-Range", "Platinum+", "Platinum+ e-4orce", "Short-Range", "Other"]
+  },
+  {
+    "id": 996,
+    "model": "Nissan Pathfinder",
+    "trims": ["SE MID", "XE", "SV", "Standard", "SL", "Silver Edition", "SE TOP", "SE T2", "SE T1", "SE Offroad", "Base", "SE Base", "SE", "S 4WD", "S", "Platinum", "Midnight Edition", "LE", "Other"]
+  },
+  {
+    "id": 997,
+    "model": "Nissan Terrano",
+    "trims": ["Other"]
+  },
+  {
+    "id": 998,
+    "model": "Nissan 300ZX",
+    "trims": ["Other"]
+  },
+  {
+    "id": 999,
+    "model": "Nissan Skyline",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1000,
+    "model": "Nissan Kicks",
+    "trims": ["S", "SL", "SR", "SR Plus", "SV", "SV Plus", "Other"]
+  },
+  {
+    "id": 1001,
+    "model": "Nissan Xterra",
+    "trims": ["Platinum", "S", "S Off-road", "S Off Road Pack", "SE", "SE Offroad", "Titanium", "X", "Other"]
+  },
+  {
+    "id": 1002,
+    "model": "Nissan Micra",
+    "trims": ["S", "SL", "SL Plus", "SL Premium", "SV", "Other"]
+  },
+  {
+    "id": 1003,
+    "model": "Nissan Frontier",
+    "trims": ["PRO", "PRO-4X", "S", "SL", "SV"]
+  },
+  {
+    "id": 1004,
+    "model": "Nissan 370z",
+    "trims": ["Coupe", "GT", "Nismo", "Nismo Tech", "Roadster", "Sport", "Sport Tech", "Standard", "TOP", "Touring", "Touring Sport", "Other"]
+  },
+  {
+    "id": 1005,
+    "model": "Nissan Tiida",
+    "trims": ["LE", "S", "S Plus", "SE", "SL", "SL Plus", "SV", "Other"]
+  },
+  {
+    "id": 1006,
+    "model": "Nissan Z",
+    "trims": ["Nismo", "Performance", "Sport", "Standard", "Other"]
+  },
+  {
+    "id": 1007,
+    "model": "Nissan Primera",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1008,
+    "model": "Nissan 280ZX",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 1009,
+    "model": "Nissan Patrol Safari",
+    "trims": ["GL", "Safari Falcon AT", "Safari Falcon MT", "Safari Gazelle AT", "Safari Gazelle MT", "Safari Gazelle X AT", "Safari Gazelle X MT"]
+  },
+  {
+    "id": 1010,
+    "model": "Nissan Patrol",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1011,
+    "model": "Nissan Sunny",
+    "trims": ["Base", "EX", "EX Saloon", "EX Super Saloon", "PE", "S", "SE", "SG", "SL", "SV", "SV Comfort", "Other"]
+  },
+  {
+    "id": 1012,
+    "model": "Nissan Teana",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1013,
+    "model": "Nissan Van",
+    "trims": ["Standard", "VX", "Other"]
+  },
+  {
+    "id": 1014,
+    "model": "Nissan Versa",
+    "trims": ["S", "SR", "SV", "Other"]
+  },
+  {
+    "id": 1015,
+    "model": "Nissan S130",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1016,
+    "model": "Nissan Maxima",
+    "trims": ["Platinum", "S", "SE", "SL", "SR", "SR 1", "SR 2", "SV", "Other"]
+  },
+  {
+    "id": 1017,
+    "model": "Nissan Pickup",
+    "trims": ["Double Cab", "Single Cab", "Other"]
+  },
+  {
+    "id": 1018,
+    "model": "Nissan Silvia",
+    "trims": ["180SX", "200SX", "240SX", "Other"]
+  },
+  {
+    "id": 1019,
+    "model": "Nissan Sylphy",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1020,
+    "model": "Nissan Sentra",
+    "trims": ["SL Premium", "XE", "SV Sport T2", "SV Sport T1", "SV Sport", "SV FE Plus", "SV", "Standard", "SR", "GXE", "SL", "SE-R V", "SE-R", "S FE Plus", "S", "LE", "Other"]
+  },
+  {
+    "id": 1021,
+    "model": "Nissan Qashqai",
+    "trims": ["LE", "S", "SE", "Other"]
+  },
+  {
+    "id": 1022,
+    "model": "Nissan 350Z",
+    "trims": ["Base", "Enthusiast", "Nismo", "Performance", "Other"]
+  },
+  {
+    "id": 1023,
+    "model": "Nissan Leaf",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1024,
+    "model": "Nissan Other",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1025,
+    "model": "Nissan Navara",
+    "trims": ["AF", "ASF", "CPF", "CSD", "CSF", "CSF 4WD", "CSF AT", "CSPF", "CSPF AR", "LE", "SE", "SR", "XE", "Other"]
+  },
+  {
+    "id": 1026,
+    "model": "Nissan Altima",
+    "trims": ["S", "SE", "Se-r", "SL", "Sport", "SR", "SV", "Other"]
+  },
+  {
+    "id": 1027,
+    "model": "Nissan Rogue",
+    "trims": ["Midnight", "Platinum", "S", "SL", "Sport", "Standard", "SV", "Other"]
+  },
+  {
+    "id": 1028,
+    "model": "Nissan Juke",
+    "trims": ["Nismo", "Nismo RS", "S", "SL", "SL T2", "SL Turbo", "SL Turbo Plus", "Standard", "SV", "Other"]
+  },
+  {
+    "id": 1029,
+    "model": "Nissan X-Trail",
+    "trims": ["4WD", "S", "S 4WD", "SE", "SL", "SL Plus", "Standard", "SV", "SV X-Treamer", "SV1", "SV4", "XE", "Other"]
+  },
+  {
+    "id": 1030,
+    "model": "Nissan Titan",
+    "trims": ["Base", "LE", "Pro-4x", "S", "SE", "SL", "SV", "XE", "Other"]
+  },
+  {
+    "id": 1031,
+    "model": "Nissan GT-R",
+    "trims": ["50th Anniversary", "Base", "Black Edition", "Nismo", "Premium", "SpecV", "Track Edition", "VVIP", "Other"]
+  },
+  {
+    "id": 1032,
+    "model": "Nissan Quest",
+    "trims": ["Platinum", "S", "SL", "SV", "Other"]
+  },
+  {
+    "id": 1033,
+    "model": "Nissan Urvan",
+    "trims": ["Standard", "Other"]
+  },
+  {
+    "id": 1034,
+    "model": "Nissan Magnite",
+    "trims": ["S", "SL", "SV"]
+  },
+  {
+    "id": 1035,
+    "model": "Nissan Armada",
+    "trims": ["LE", "Platinum", "SE", "SE Offroad", "SL", "SV", "Titanium", "Other"]
+  },
+  {
+    "id": 1036,
+    "model": "Nissan 400Z",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1037,
+    "model": "Noble M600",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1038,
+    "model": "Oldsmobile Delta 88",
+    "trims": ["Royale", "Other"]
+  },
+  {
+    "id": 1039,
+    "model": "OMODA OMODA C5",
+    "trims": ["Comfort", "Luxury", "Sport"]
+  },
+  {
+    "id": 1040,
+    "model": "Opel Astra",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1041,
+    "model": "Opel Grandland X",
+    "trims": ["Enjoy", "Innovation", "Innovation Plus", "Other"]
+  },
+  {
+    "id": 1042,
+    "model": "Opel Zafira Life",
+    "trims": ["Business Innovation"]
+  },
+  {
+    "id": 1043,
+    "model": "Opel Vita",
+    "trims": ["Other"]
+  },
+  {
+    "id": 1044,
+    "model": "Opel Other",
+    "trims": ["Other"]
+  }
+];
+
+  if (!Array.isArray(data)) {
+    return res.status(400).json({ error: 'Expected an array of objects' });
+  }
+
+  let insertCount = 0;
+  let toInsert = 0;
+
+  data.forEach(item => {
+    if (!item.model || !Array.isArray(item.trims)) return;
+
+    db.query('SELECT id FROM models WHERE make = ?', [item.model], (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      if (results.length === 0) {
+        console.warn(`Model not found: ${item.model}`);
+        return;
+      }
+
+      const modelId = results[0].id;
+      toInsert += item.trims.length;
+
+      item.trims.forEach(trim => {
+        db.query('INSERT INTO trims (model_id, trim) VALUES (?, ?)', [modelId, trim], (err) => {
+          if (err) console.error(`Failed to insert trim "${trim}" for model "${item.model}": ${err.message}`);
+          insertCount++;
+
+          if (insertCount === toInsert) {
+            res.status(200).json({ message: 'All trims processed.' });
+          }
+        });
+      });
+    });
+  });
+
+  if (data.length === 0) {
+    return res.status(200).json({ message: 'No data received.' });
+  }
+});
+
+router.get('/trims/:model', (req, res) => {
+  const { model } = req.params;
+
+  if (!model) {
+    return res.status(400).json({ error: 'Model name is required' });
+  }
+
+  db.query('SELECT id FROM models WHERE make = ?', [model], (err, modelResults) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    if (modelResults.length === 0) {
+      return res.status(404).json({ error: 'Model not found' });
+    }
+    const modelId = modelResults[0].id;
+    db.query('SELECT * FROM trims WHERE model_id = ?', [modelId], (err, trimResults) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(trimResults);
+    });
+  });
+});
+
 
 module.exports = router;

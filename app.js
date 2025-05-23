@@ -13,24 +13,25 @@ const files = require('./routes/files');
 const stripe = require('./routes/stripe');
 const data = require('./routes/data');
 require('dotenv').config();
-const MySQLStore = require('express-mysql-session')(session);
+const MySQLStore = require("express-mysql-session")(session);
 
-
-const sessionStore = new MySQLStore({
+const dbOptions = {
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'carpro',
+    user: 'quanticsols_booking',
+    password: 'bookingadmin123',
+    database: 'quanticsols_carpro',
     port: 3306
-});
-  
+};
 
-app.use(cors({ origin: "http://localhost:5173" }));
+const sessionStore = new MySQLStore(dbOptions);
+app.use(cors({ origin: "https://carpro.quanticsols.com" }));
 app.use(express.json());
 app.use(
   session({
+    key: 'carpro_session_id',
     secret: process.env.SESSION_SECRET,
     resave: false,
+    store: sessionStore,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
   })

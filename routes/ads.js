@@ -8,7 +8,7 @@ router.post("/", (req, res) => {
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, vehicle_condition
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type
     } = req.body;
     const sql = `
     INSERT INTO ads (
@@ -16,9 +16,9 @@ router.post("/", (req, res) => {
       car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs, 
       number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission, 
       horse_power, dealer_name, doors, category, popular, date, featured, status, 
-      name, phone, gmail, location, title, description, vehicle_condition
+      name, phone, gmail, location, title, description, country, fuel_type
     ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
 
 
@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
         user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
-        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, vehicle_condition
+        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country, fuel_type
     ];
 
     db.query(sql, values, (err, result) => {
@@ -37,7 +37,7 @@ router.post("/", (req, res) => {
 
 
 router.get("/", (req, res) => {
-    db.query("SELECT * FROM ads", (err, results) => {
+    db.query("SELECT * FROM ads ORDER BY date DESC", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
@@ -49,21 +49,20 @@ router.put("/:id", (req, res) => {
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, vehicle_condition
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type
     } = req.body;
     const sql = `UPDATE ads SET user_id=?, city=?, model=?, price=?, trim=?, kilometers=?, year=?, 
                   manufacturer=?, seats=?, car_plate_number=?, warranty=?, steering_wheel=?, 
                   seller_type=?, body=?, regional_specs=?, number_of_cylinders=?, exterior_color=?, 
                   interior_color=?, engine_capacity=?, transmission=?, horse_power=?, dealer_name=?, 
                   doors=?, category=?, popular=?, date=?, featured=?, status=?, name=?, phone=?, gmail=?, 
-                  location=?, title=?, description=?, vehicle_condition=? WHERE id=?`;
+                  location=?, title=?, description=?, country=?, fuel_type=? WHERE id=?`;
 
     const values = [
         user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
-        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, 
-        vehicle_condition, req.params.id
+        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country, fuel_type, req.params.id
     ];
 
     db.query(sql, values, (err, result) => {
@@ -90,11 +89,15 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/user/:id", (req, res) => {
-
     db.query("SELECT * FROM ads WHERE user_id = ?", [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
-        if (result.length === 0) return res.status(404).json({ message: "Ad not found" });
-        res.json(result);
+        const formattedData = result.map(ad => ({
+            ...ad,
+            adType: "sell" 
+        }));
+
+        console.log(formattedData);
+        res.json(formattedData);
     });
 });
 
@@ -115,7 +118,7 @@ router.get('/preview/:id', async (req, res) => {
             <meta property="og:title" content="${result.title}" />
             <meta property="og:description" content="${result.description}" />
             <meta property="og:image" content="${result.imageUrl}" />
-            <meta property="og:url" content="http://localhost:5173.com/ad/${result.id}" />
+            <meta property="og:url" content="https://carpro.quanticsols.com/ad/${result.id}" />
             <meta property="og:type" content="website" />
       
             <!-- Twitter Card -->
@@ -126,7 +129,7 @@ router.get('/preview/:id', async (req, res) => {
           </head>
           <body>
             Redirecting to the app...
-            <script>window.location.href = "http://localhost:5173.com/ad/${result.id}"</script>
+            <script>window.location.href = "https://carpro.quanticsols.com/ad/${result.id}"</script>
           </body>
           </html>
         `;
