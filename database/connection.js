@@ -1,16 +1,24 @@
 const mysql = require('mysql2');
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'quanticsols_booking',
-    password: 'bookingadmin123',
-    database: 'quanticsols_carpro',
-    port: 3306
+// const pool = mysql.createPool({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'carpro',
+//     waitForConnections: true,
+//     connectionLimit: 10,
+//     queueLimit: 0
+// });
+
+const pool = mysql.createPool({
+    host: 'carpro.c340q84yan5b.eu-north-1.rds.amazonaws.com',
+    user: 'root',
+    password: 'carprodb1234',
+    database: 'carpro',
+    port: 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-db.connect(err => {
-    if (err) throw err;
-    console.log('MySQL Connected...');
-});
-
-module.exports = db;
+module.exports = pool;

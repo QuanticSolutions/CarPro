@@ -15,11 +15,24 @@ const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 const serverClient = new StreamChat(apiKey, apiSecret);
 
+router.get('/users', (req, res) => {
+    const query = 'SELECT * FROM users';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ results });
+    });
+});
 
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     const query = 'SELECT * FROM users WHERE id = ?';
-
     db.query(query, [id], (err, results) => {
         if (err) {
             console.error(err);
@@ -36,14 +49,24 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, phone, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const streamUserId = `${email.split('@')[0]}`;
 
-    const query = 'INSERT INTO users (fullname, email, password, stream_id) VALUES (?, ?, ?, ?)';
-    db.query(query, [name, email, hashedPassword, streamUserId], async (err, result) => {
+    const query = 'INSERT INTO users (fullname, email, phone, password, stream_id) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [name, email, phone, hashedPassword, streamUserId], async (err, result) => {
         if (err) return res.status(500).json({ message: err.sqlMessage });
         await serverClient.upsertUser({ id: streamUserId, name, email });
+        res.status(201).json({ message: 'User created successfully' });
+    });
+});
+
+router.post('/users', async (req, res) => {
+    const { name, email, role, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = 'INSERT INTO users (fullname, email, role, password) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, email, role, hashedPassword], async (err, result) => {
+        if (err) return res.status(500).json({ message: err.sqlMessage });
         res.status(201).json({ message: 'User created successfully' });
     });
 });
@@ -59,20 +82,46 @@ const registerPushToken = async (userId, firebaseToken) => {
     }
 };
 
+
 router.post('/login', async (req, res) => {
-    const { email, password, firebaseToken } = req.body;
-    const query = 'SELECT * FROM users WHERE email = ?';
-    db.query(query, [email], async (err, results) => {
-        if (err || results.length === 0) {
+    const { email, phone, password, firebaseToken } = req.body;
+    let query;
+    let identifier;
+    if (email) {
+        query = 'SELECT * FROM users WHERE email = ?';
+        identifier = email;
+    } else if (phone) {
+        query = 'SELECT * FROM users WHERE phone = ?';
+        identifier = phone;
+    } else {
+        return res.status(400).json({ message: 'Email or phone number is required' });
+    }
+    
+    db.query(query, [identifier], async (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+        
+        if (results.length === 0) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
+        
         const user = results[0];
         const match = await bcrypt.compare(password, user.password);
+        
         if (!match) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        
+        const token = jwt.sign({ 
+            id: user.id, 
+            email: user.email,
+            phone: user.phone 
+        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        
         const stream_token = serverClient.createToken(user.stream_id);
+        
         if (firebaseToken) {
             await registerPushToken(user.stream_id, firebaseToken);
             const updateQuery = "UPDATE users SET firebase_token = ? WHERE id = ?";
@@ -80,10 +129,51 @@ router.post('/login', async (req, res) => {
                 if (updateErr) console.error("Error saving Firebase token:", updateErr);
             });
         }
-        res.json({ token, user, stream_token, stream_id: user.stream_id });
+        
+        res.json({ 
+            token, 
+            user, 
+            stream_token, 
+            stream_id: user.stream_id 
+        });
     });
 });
 
+router.put("/reset", async (req, res) => {
+    const { email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+    }
+    try {
+        const findUserSql = "SELECT id FROM users WHERE email=?";
+        db.query(findUserSql, [email], (err, userResult) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            if (userResult.length === 0) {
+                return res.status(200).json({ message: "User not found" });
+            }
+            const userId = userResult[0].id;
+            const values = [hashedPassword, userId];
+            const updateSql = `UPDATE users SET password=? WHERE id=?`;
+            db.query(updateSql, values, (err, result) => {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+                if (result.affectedRows === 0) {
+                    return res.status(404).json({ message: "Failed to update password" });
+                }
+                res.json({ 
+                    message: "Password updated successfully",
+                    userId: userId 
+                });
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 router.put("/:id", async (req, res) => {
     const { fullname, date_of_birth, gender, about, email, password, phone, currentPassword, newPassword, googleId } = req.body;
@@ -243,7 +333,7 @@ router.post("/send-otp", (req, res) => {
     const { email } = req.body;
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    otpStore[email] = { otp, expires: Date.now() + 300000 }; // 5 minutes
+    otpStore[email] = { otp, expires: Date.now() + 300000 };
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
@@ -253,12 +343,13 @@ router.post("/send-otp", (req, res) => {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-        if (error) return res.status(500).json({ error: "Failed to send email" });
+        if (error) {
+            console.log(error)
+            return res.status(500).json({ error: "Failed to send email" });
+        }
         res.json({ message: "OTP sent successfully" });
     });
 });
-
-
 
 router.post("/verify-otp", (req, res) => {
     const { email, otp } = req.body;
@@ -268,7 +359,7 @@ router.post("/verify-otp", (req, res) => {
         return res.status(400).json({ error: "Invalid or expired OTP" });
     }
 
-    delete otpStore[email]; // OTP can be used once
+    delete otpStore[email];
     res.json({ message: "OTP verified successfully" });
 });
 

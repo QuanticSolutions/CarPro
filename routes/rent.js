@@ -51,21 +51,21 @@ router.put("/:id", (req, res) => {
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, country, fuel_type
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type, reported
     } = req.body;
     const sql = `UPDATE ads SET user_id=?, city=?, model=?, daily_rent=?, weekly_rent=?, monthly_rent=?, trim=?, kilometers=?, year=?, 
                   manufacturer=?, seats=?, car_plate_number=?, warranty=?, steering_wheel=?, 
                   seller_type=?, body=?, regional_specs=?, number_of_cylinders=?, exterior_color=?, 
                   interior_color=?, engine_capacity=?, transmission=?, horse_power=?, dealer_name=?, 
                   doors=?, category=?, popular=?, date=?, featured=?, status=?, name=?, phone=?, gmail=?, 
-                  location=?, title=?, description=?, country=?, fuel_type=? WHERE id=?`;
+                  location=?, title=?, description=?, country=?, fuel_type=?, reported=? WHERE id=?`;
 
     const values = [
         user_id, city, model, daily, weekly, monthly, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
         horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country,
-        fuel_type, req.params.id
+        fuel_type, reported, req.params.id
     ];
 
     db.query(sql, values, (err, result) => {

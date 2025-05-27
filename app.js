@@ -15,16 +15,42 @@ const data = require('./routes/data');
 require('dotenv').config();
 const MySQLStore = require("express-mysql-session")(session);
 
+// const dbOptions = {
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'carpro',
+//     port: 3306
+// };
+
 const dbOptions = {
-    host: 'localhost',
-    user: 'quanticsols_booking',
-    password: 'bookingadmin123',
-    database: 'quanticsols_carpro',
+    host: 'carpro.c340q84yan5b.eu-north-1.rds.amazonaws.com',
+    user: 'root',
+    password: 'carprodb1234',
+    database: 'carpro',
     port: 3306
 };
 
+const allowedOrigins = [
+  "https://carsfinderpro.com",
+  "https://www.carsfinderpro.com",
+  "https://www.carpro.quanticsols.com",
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
+
 const sessionStore = new MySQLStore(dbOptions);
-app.use(cors({ origin: "https://carpro.quanticsols.com" }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use(
   session({

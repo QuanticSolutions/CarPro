@@ -37,6 +37,7 @@ router.post("/", (req, res) => {
 
 
 router.get("/", (req, res) => {
+
     db.query("SELECT * FROM ads ORDER BY date DESC", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
@@ -49,22 +50,22 @@ router.put("/:id", (req, res) => {
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, country, fuel_type
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type, reported
     } = req.body;
     const sql = `UPDATE ads SET user_id=?, city=?, model=?, price=?, trim=?, kilometers=?, year=?, 
                   manufacturer=?, seats=?, car_plate_number=?, warranty=?, steering_wheel=?, 
                   seller_type=?, body=?, regional_specs=?, number_of_cylinders=?, exterior_color=?, 
                   interior_color=?, engine_capacity=?, transmission=?, horse_power=?, dealer_name=?, 
                   doors=?, category=?, popular=?, date=?, featured=?, status=?, name=?, phone=?, gmail=?, 
-                  location=?, title=?, description=?, country=?, fuel_type=? WHERE id=?`;
+                  location=?, title=?, description=?, country=?, fuel_type=?, reported=? WHERE id=?`;
 
     const values = [
         user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
-        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country, fuel_type, req.params.id
+        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, 
+        title, description, country, fuel_type, reported, req.params.id
     ];
-
     db.query(sql, values, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         if (result.affectedRows === 0) return res.status(404).json({ message: "Ad not found" });
