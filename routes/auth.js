@@ -243,7 +243,7 @@ const handleSocialLogin = (profile, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback'
+    callbackURL: 'https://api.carsfinderpro.com/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
     handleSocialLogin(profile, done);
 }));
@@ -291,7 +291,7 @@ router.get('/facebook/callback',
             return res.status(401).json({ message: "User not authenticated" });
         }
         const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.redirect(`http://localhost:5173/auth-handler?token=${token}&user_id=${req.user.id}&stream_id=${req.user.stream_id}&stream_token=${req.user.stream_token}`);
+        res.redirect(`https://carsfinderpro.com/auth-handler?token=${token}&user_id=${req.user.id}&stream_id=${req.user.stream_id}&stream_token=${req.user.stream_token}`);
     }
 );
 
@@ -302,7 +302,7 @@ router.get('/apple/callback',
             return res.status(401).json({ message: "User not authenticated" });
         }
         const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.redirect(`http://localhost:5173/auth-handler?token=${token}`);
+        res.redirect(`https://carsfinderpro.com/auth-handler?token=${token}`);
     }
 );
 
@@ -315,7 +315,7 @@ router.get('/google/callback',
         const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         console.log(req.user)
         const stream_token = serverClient.createToken(req.user.stream_id);
-        res.redirect(`http://localhost:5173/auth-handler?token=${token}&user_id=${req.user.id}&stream_id=${req.user.stream_id}&stream_token=${stream_token}`);
+        res.redirect(`https://carsfinderpro.com/auth-handler?token=${token}&user_id=${req.user.id}&stream_id=${req.user.stream_id}&stream_token=${stream_token}`);
     }
 );
 
