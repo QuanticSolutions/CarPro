@@ -243,7 +243,7 @@ const handleSocialLogin = (profile, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'https://api.carsfinderpro.com/auth/google/callback'
+    callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
     handleSocialLogin(profile, done);
 }));
