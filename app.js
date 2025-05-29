@@ -33,6 +33,8 @@ const dbOptions = {
 
 const allowedOrigins = [
   "https://carsfinderpro.com",
+  "https://api.carsfinderpro.com",
+  "https://www.api.carsfinderpro.com",
   "https://www.carsfinderpro.com",
   "https://www.carpro.quanticsols.com",
   "http://localhost:5173",
