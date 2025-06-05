@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const db = require("../database/connection");
 const fs = require('fs');
 const router = express.Router();
 
@@ -23,17 +24,17 @@ function clearUserUploadDir(req, res, next) {
 }
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     const userId = req.params.id || 'default';
     const userDir = path.join(uploadDir, userId);
-    
+
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir, { recursive: true });
       console.log(`User directory created: ${userDir}`);
     }
     cb(null, userDir);
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
     cb(null, file.fieldname + '-' + uniqueSuffix + ext);
@@ -48,7 +49,7 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: {
     fileSize: 5 * 1024 * 1024,
@@ -58,6 +59,10 @@ const upload = multer({
 
 
 router.post('/upload/:id', upload.single('image'), (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ loggedIn: false, message: 'No token found' });
+  }
   try {
     if (!req.file) {
       return res.status(400).send({ message: 'Please upload an image' });
@@ -76,7 +81,11 @@ router.post('/upload/:id', upload.single('image'), (req, res) => {
   }
 });
 
-router.post('/uploads/:id', clearUserUploadDir,  upload.array('images', 10), (req, res) => {
+router.post('/uploads/:id', clearUserUploadDir, upload.array('images', 10), (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ loggedIn: false, message: 'No token found' });
+  }
   try {
     console.log(req.files)
     if (!req.files || req.files.length === 0) {
@@ -87,7 +96,7 @@ router.post('/uploads/:id', clearUserUploadDir,  upload.array('images', 10), (re
       path: file.path,
       imageUrl: `/routes/uploads/${req.params.id || 'default'}/${file.filename}`
     }));
-    
+
     res.status(201).send({
       message: `${req.files.length} images uploaded successfully`,
       files: uploadedFiles
@@ -101,10 +110,11 @@ router.post('/uploads/:id', clearUserUploadDir,  upload.array('images', 10), (re
 });
 
 router.get('/upload/:id/', (req, res) => {
+
   try {
     const { id, filename } = req.params;
     const filepath = path.join(uploadDir, id, filename);
-    
+
     if (!fs.existsSync(filepath)) {
       return res.status(404).send({ message: 'Image not found' });
     }
@@ -141,10 +151,10 @@ router.get('/uploads/stream/:id', async (req, res) => {
         return res.status(404).json({ message: "No uploaded images found for user." });
       }
 
-      const files = fs.readdirSync(filepath).filter(file => !file.startsWith('.')); // skip hidden files
+      const files = fs.readdirSync(filepath).filter(file => !file.startsWith('.'));
       const imageUrls = files.map(filename => ({
         filename,
-        imageUrl: `/files/uploads/${user.id}/${filename}` // make sure this route is served statically or via another endpoint
+        imageUrl: `/files/uploads/${user.id}/${filename}`
       }));
 
       res.status(200).send({
@@ -162,20 +172,21 @@ router.get('/uploads/stream/:id', async (req, res) => {
 
 
 router.get('/uploads/:id', (req, res) => {
+
   try {
     const { id } = req.params;
     const userDir = path.join(uploadDir, id);
-    
+
     if (!fs.existsSync(userDir)) {
       return res.status(404).send({ message: 'User directory not found' });
     }
-    
+
     const files = fs.readdirSync(userDir);
     const imageUrls = files.map(filename => ({
       filename,
       imageUrl: `/files/images/${id}/${filename}`
     }));
-    
+
     res.status(200).send({
       count: files.length,
       images: imageUrls
@@ -189,13 +200,13 @@ router.get('/uploads/:id', (req, res) => {
 });
 
 router.get('/images/:id/:filename', (req, res) => {
-    const { id, filename } = req.params;
-    const imagePath = path.join(__dirname, 'uploads', id, filename);
-    if (!fs.existsSync(imagePath)) {
-      return res.status(404).send({ message: 'Image not found' });
-    }
-  
-    res.sendFile(imagePath);
-  });
+  const { id, filename } = req.params;
+  const imagePath = path.join(__dirname, 'uploads', id, filename);
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).send({ message: 'Image not found' });
+  }
+
+  res.sendFile(imagePath);
+});
 
 module.exports = router;

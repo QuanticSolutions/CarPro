@@ -3,6 +3,10 @@ const db = require("../database/connection");
 const router = express.Router();
 
 router.post("/", (req, res) => {
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
     const {
         user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body,
@@ -39,7 +43,6 @@ router.post("/", (req, res) => {
 
 
 router.get("/", (req, res) => {
-
     db.query("SELECT * FROM ads ORDER BY date DESC", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
@@ -47,6 +50,10 @@ router.get("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
     const {
         user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body,
@@ -76,6 +83,10 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
     db.query("DELETE FROM ads WHERE id = ?", [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         if (result.affectedRows === 0) return res.status(404).json({ message: "Ad not found" });
@@ -92,6 +103,10 @@ router.get("/:id", (req, res) => {
 });
 
 router.get("/user/:id", (req, res) => {
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
     db.query("SELECT * FROM ads WHERE user_id = ?", [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         const formattedData = result.map(ad => ({
@@ -99,13 +114,15 @@ router.get("/user/:id", (req, res) => {
             adType: "sell" 
         }));
 
-        console.log(formattedData);
         res.json(formattedData);
     });
 });
 
 router.get('/preview/:id', async (req, res) => {
-
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
     db.query("SELECT * FROM ads WHERE id = ?", [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         if (result.length === 0) return res.json([]);

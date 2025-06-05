@@ -15,6 +15,19 @@ const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 const serverClient = new StreamChat(apiKey, apiSecret);
 
+router.get('/check', (req, res) => {
+    const token =  req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ loggedIn: true, user: decoded });
+    } catch (err) {
+        res.status(401).json({ loggedIn: false, message: 'Invalid token' });
+    }
+});
+
 router.get('/users', (req, res) => {
     const query = 'SELECT * FROM users';
     db.query(query, (err, results) => {
@@ -129,14 +142,13 @@ router.post('/login', async (req, res) => {
                 if (updateErr) console.error("Error saving Firebase token:", updateErr);
             });
         }
-        // res.cookie('token', token, {
-        //     httpOnly: true,
-        //     secure: true,
-        //     sameSite: 'strict',
-        //     maxAge: 3600000,
-        // });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 3600000,
+        });
         res.json({
-            token,
             user,
             stream_token,
             stream_id: user.stream_id
@@ -144,27 +156,15 @@ router.post('/login', async (req, res) => {
     });
 });
 
-// router.get('/check', (req, res) => {
-//     const token =  req.header('x-auth-token');;
-//     if (!token) {
-//         return res.status(401).json({ loggedIn: false, message: 'No token found' });
-//     }
-//     try {
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//         res.json({ loggedIn: true, user: decoded });
-//     } catch (err) {
-//         res.status(401).json({ loggedIn: false, message: 'Invalid token' });
-//     }
-// });
 
-// router.post('/logout', (req, res) => {
-//   res.clearCookie('token', {
-//     httpOnly: true,
-//     secure: true,
-//     sameSite: 'strict'
-//   });
-//   res.json({ message: 'Logged out' });
-// });
+router.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict'
+  });
+  res.json({ message: 'Logged out' });
+});
 
 router.put("/reset", async (req, res) => {
     const { email, password } = req.body;
