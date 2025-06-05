@@ -15,38 +15,38 @@ const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 const serverClient = new StreamChat(apiKey, apiSecret);
 
-// router.get('/users', (req, res) => {
-//     const query = 'SELECT * FROM users';
-//     db.query(query, (err, results) => {
-//         if (err) {
-//             console.error(err);
-//             return res.status(500).json({ message: 'Database error' });
-//         }
+router.get('/users', (req, res) => {
+    const query = 'SELECT * FROM users';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Database error' });
+        }
 
-//         if (results.length === 0) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         res.json({ results });
-//     });
-// });
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ results });
+    });
+});
 
-// router.get('/:id', (req, res) => {
-//     const { id } = req.params;
-//     const query = 'SELECT * FROM users WHERE id = ?';
-//     db.query(query, [id], (err, results) => {
-//         if (err) {
-//             console.error(err);
-//             return res.status(500).json({ message: 'Database error' });
-//         }
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM users WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Database error' });
+        }
 
-//         if (results.length === 0) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-//         const user = results[0];
-//         res.json({ user });
-//     });
-// });
+        const user = results[0];
+        res.json({ user });
+    });
+});
 
 router.post('/signup', async (req, res) => {
     const { name, email, phone, password } = req.body;
@@ -129,12 +129,12 @@ router.post('/login', async (req, res) => {
                 if (updateErr) console.error("Error saving Firebase token:", updateErr);
             });
         }
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 3600000,
-        });
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite: 'strict',
+        //     maxAge: 3600000,
+        // });
         res.json({
             token,
             user,
@@ -144,27 +144,27 @@ router.post('/login', async (req, res) => {
     });
 });
 
-router.get('/check', (req, res) => {
-    const token =  req.header('x-auth-token');;
-    if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
-    }
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({ loggedIn: true, user: decoded });
-    } catch (err) {
-        res.status(401).json({ loggedIn: false, message: 'Invalid token' });
-    }
-});
+// router.get('/check', (req, res) => {
+//     const token =  req.header('x-auth-token');;
+//     if (!token) {
+//         return res.status(401).json({ loggedIn: false, message: 'No token found' });
+//     }
+//     try {
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//         res.json({ loggedIn: true, user: decoded });
+//     } catch (err) {
+//         res.status(401).json({ loggedIn: false, message: 'Invalid token' });
+//     }
+// });
 
-router.post('/logout', (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'strict'
-  });
-  res.json({ message: 'Logged out' });
-});
+// router.post('/logout', (req, res) => {
+//   res.clearCookie('token', {
+//     httpOnly: true,
+//     secure: true,
+//     sameSite: 'strict'
+//   });
+//   res.json({ message: 'Logged out' });
+// });
 
 router.put("/reset", async (req, res) => {
     const { email, password } = req.body;
