@@ -23,6 +23,7 @@ const MySQLStore = require("express-mysql-session")(session);
 //     database: 'carpro',
 //     port: 3306
 // };
+
 const dbOptions = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
