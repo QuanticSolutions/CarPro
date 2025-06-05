@@ -12,10 +12,10 @@ require('dotenv').config();
 // });
 
 const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    host: 'carpro.c340q84yan5b.eu-north-1.rds.amazonaws.com',
+    user: 'root',
+    password: 'carprodb1234',
+    database: 'carpro',
     port: 3306,
     waitForConnections: true,
     connectionLimit: 10,
