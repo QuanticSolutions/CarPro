@@ -15,38 +15,38 @@ const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 const serverClient = new StreamChat(apiKey, apiSecret);
 
-router.get('/users', (req, res) => {
-    const query = 'SELECT * FROM users';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Database error' });
-        }
+// router.get('/users', (req, res) => {
+//     const query = 'SELECT * FROM users';
+//     db.query(query, (err, results) => {
+//         if (err) {
+//             console.error(err);
+//             return res.status(500).json({ message: 'Database error' });
+//         }
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json({ results });
-    });
-});
+//         if (results.length === 0) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+//         res.json({ results });
+//     });
+// });
 
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM users WHERE id = ?';
-    db.query(query, [id], (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Database error' });
-        }
+// router.get('/:id', (req, res) => {
+//     const { id } = req.params;
+//     const query = 'SELECT * FROM users WHERE id = ?';
+//     db.query(query, [id], (err, results) => {
+//         if (err) {
+//             console.error(err);
+//             return res.status(500).json({ message: 'Database error' });
+//         }
 
-        if (results.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+//         if (results.length === 0) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
 
-        const user = results[0];
-        res.json({ user });
-    });
-});
+//         const user = results[0];
+//         res.json({ user });
+//     });
+// });
 
 router.post('/signup', async (req, res) => {
     const { name, email, phone, password } = req.body;
@@ -96,32 +96,32 @@ router.post('/login', async (req, res) => {
     } else {
         return res.status(400).json({ message: 'Email or phone number is required' });
     }
-    
+
     db.query(query, [identifier], async (err, results) => {
         if (err) {
             console.error('Database error:', err);
             return res.status(500).json({ message: 'Internal server error' });
         }
-        
+
         if (results.length === 0) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        
+
         const user = results[0];
         const match = await bcrypt.compare(password, user.password);
-        
+
         if (!match) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        
-        const token = jwt.sign({ 
-            id: user.id, 
+
+        const token = jwt.sign({
+            id: user.id,
             email: user.email,
-            phone: user.phone 
+            phone: user.phone
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        
+
         const stream_token = serverClient.createToken(user.stream_id);
-        
+
         if (firebaseToken) {
             await registerPushToken(user.stream_id, firebaseToken);
             const updateQuery = "UPDATE users SET firebase_token = ? WHERE id = ?";
@@ -129,14 +129,41 @@ router.post('/login', async (req, res) => {
                 if (updateErr) console.error("Error saving Firebase token:", updateErr);
             });
         }
-        
-        res.json({ 
-            token, 
-            user, 
-            stream_token, 
-            stream_id: user.stream_id 
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 3600000,
+        });
+        res.json({
+            token,
+            user,
+            stream_token,
+            stream_id: user.stream_id
         });
     });
+});
+
+router.get('/check', (req, res) => {
+    const token =  req.header('x-auth-token');;
+    if (!token) {
+        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ loggedIn: true, user: decoded });
+    } catch (err) {
+        res.status(401).json({ loggedIn: false, message: 'Invalid token' });
+    }
+});
+
+router.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict'
+  });
+  res.json({ message: 'Logged out' });
 });
 
 router.put("/reset", async (req, res) => {
@@ -164,9 +191,9 @@ router.put("/reset", async (req, res) => {
                 if (result.affectedRows === 0) {
                     return res.status(404).json({ message: "Failed to update password" });
                 }
-                res.json({ 
+                res.json({
                     message: "Password updated successfully",
-                    userId: userId 
+                    userId: userId
                 });
             });
         });
@@ -187,7 +214,7 @@ router.put("/:id", async (req, res) => {
         updateFields += `, password=?`;
         values.push(await bcrypt.hash(newPassword, 10))
     }
-    if(googleId || googleId == "") {
+    if (googleId || googleId == "") {
         updateFields += `, google_id=NULL`;
     }
     values.push(req.params.id)
@@ -214,7 +241,7 @@ const handleSocialLogin = (profile, done) => {
     const googleId = profile.id;
     db.query(query, [email], (err, results) => {
         if (err) return done(err);
-        if (results.length > 0){
+        if (results.length > 0) {
             const user = results[0];
             if (!user.google_id) {
                 const updateQuery = 'UPDATE users SET google_id = ? WHERE id = ?';
@@ -224,7 +251,7 @@ const handleSocialLogin = (profile, done) => {
                 });
             }
             return done(null, user);
-        } 
+        }
 
         const streamUserId = `${email.split('@')[0]}_${googleId}`;
         const insertQuery = 'INSERT INTO users (fullname, email, stream_id, google_id) VALUES (?, ?, ?, ?)';
@@ -243,7 +270,7 @@ const handleSocialLogin = (profile, done) => {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback'
+    callbackURL: 'https://api.carsfinderpro.com/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
     handleSocialLogin(profile, done);
 }));

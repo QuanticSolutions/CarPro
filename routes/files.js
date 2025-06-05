@@ -10,6 +10,18 @@ if (!fs.existsSync(uploadDir)) {
   console.log('Uploads directory created');
 }
 
+function clearUserUploadDir(req, res, next) {
+  const userId = req.params.id || 'default';
+  const userDir = path.join(uploadDir, userId);
+
+  if (fs.existsSync(userDir)) {
+    fs.rmSync(userDir, { recursive: true, force: true });
+  }
+  fs.mkdirSync(userDir, { recursive: true });
+
+  next();
+}
+
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     const userId = req.params.id || 'default';
@@ -27,6 +39,7 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + uniqueSuffix + ext);
   }
 });
+
 
 const fileFilter = (req, file, cb) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
@@ -63,8 +76,9 @@ router.post('/upload/:id', upload.single('image'), (req, res) => {
   }
 });
 
-router.post('/uploads/:id', upload.array('images', 10), (req, res) => {
+router.post('/uploads/:id', clearUserUploadDir,  upload.array('images', 10), (req, res) => {
   try {
+    console.log(req.files)
     if (!req.files || req.files.length === 0) {
       return res.status(200)
     }

@@ -11,6 +11,7 @@ const rent = require('./routes/rent')
 const favs = require('./routes/favourites')
 const files = require('./routes/files');
 const stripe = require('./routes/stripe');
+const cookieParser = require('cookie-parser');
 const data = require('./routes/data');
 require('dotenv').config();
 const MySQLStore = require("express-mysql-session")(session);
@@ -22,9 +23,8 @@ const MySQLStore = require("express-mysql-session")(session);
 //     database: 'carpro',
 //     port: 3306
 // };
-
 const dbOptions = {
-    host: 'carpro.c340q84yan5b.eu-north-1.rds.amazonaws.com',
+      host: 'carpro.c340q84yan5b.eu-north-1.rds.amazonaws.com',
     user: 'root',
     password: 'carprodb1234',
     database: 'carpro',
@@ -42,6 +42,7 @@ const allowedOrigins = [
 ];
 
 const sessionStore = new MySQLStore(dbOptions);
+app.use(cookieParser());
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);

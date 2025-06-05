@@ -5,35 +5,36 @@ const router = express.Router();
 
 router.post("/", (req, res) => {
     const {
-        user_id, city, model, daily, weekly, monthly, trim, kilometers, year, manufacturer, seats,
+        user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, country, fuel_type
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type, wheels,
+        length
     } = req.body;
-    console.log(req.body)
     const sql = `
-    INSERT INTO ads (
-      user_id, city, model, daily_rent, weekly_rent, monthly_rent, trim, kilometers, year, manufacturer, seats, 
+    INSERT INTO rent (
+      user_id, city, model, price, trim, kilometers, year, manufacturer, seats, 
       car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs, 
       number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission, 
       horse_power, dealer_name, doors, category, popular, date, featured, status, 
-      name, phone, gmail, location, title, description, country, fuel_type
+      name, phone, gmail, location, title, description, country, fuel_type, wheels, length
     ) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
   `;
 
 
     const values = [
-        user_id, city, model, daily, weekly, monthly, trim, kilometers, year, manufacturer, seats,
+        user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
-        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country, fuel_type
+        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country, fuel_type,
+        wheels, length
     ];
 
     db.query(sql, values, (err, result) => {
         if (err) { console.log(err.message); return res.status(500).json({ error: err.message }) };
-        res.json({ message: "Rent Ad created successfully", id: result.insertId });
+        res.json({ message: "Sell Ad created successfully", id: result.insertId });
     });
 });
 
@@ -47,27 +48,26 @@ router.get("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
     const {
-        user_id, city, model, daily, weekly, monthly, trim, kilometers, year, manufacturer, seats,
+        user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body,
         regional_specs, number_of_cylinders, exterior_color, interior_color,
         engine_capacity, transmission, horse_power, dealer_name, doors, category,
-        featured, status, name, phone, gmail, location, title, description, country, fuel_type, reported
+        featured, status, name, phone, gmail, location, title, description, country, fuel_type, reported, wheels, length
     } = req.body;
-    const sql = `UPDATE ads SET user_id=?, city=?, model=?, daily_rent=?, weekly_rent=?, monthly_rent=?, trim=?, kilometers=?, year=?, 
+    const sql = `UPDATE rent SET user_id=?, city=?, model=?, price=?, trim=?, kilometers=?, year=?, 
                   manufacturer=?, seats=?, car_plate_number=?, warranty=?, steering_wheel=?, 
                   seller_type=?, body=?, regional_specs=?, number_of_cylinders=?, exterior_color=?, 
                   interior_color=?, engine_capacity=?, transmission=?, horse_power=?, dealer_name=?, 
                   doors=?, category=?, popular=?, date=?, featured=?, status=?, name=?, phone=?, gmail=?, 
-                  location=?, title=?, description=?, country=?, fuel_type=?, reported=? WHERE id=?`;
+                  location=?, title=?, description=?, country=?, fuel_type=?, reported=?, wheels=?, length=? WHERE id=?`;
 
     const values = [
-        user_id, city, model, daily, weekly, monthly, trim, kilometers, year, manufacturer, seats,
+        user_id, city, model, price, trim, kilometers, year, manufacturer, seats,
         car_plate_number, warranty, steering_wheel, seller_type, body, regional_specs,
         number_of_cylinders, exterior_color, interior_color, engine_capacity, transmission,
-        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, title, description, country,
-        fuel_type, reported, req.params.id
+        horse_power, dealer_name, doors, category, 0, new Date(), featured, status, name, phone, gmail, location, 
+        title, description, country, fuel_type, reported, wheels, length, req.params.id
     ];
-
     db.query(sql, values, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         if (result.affectedRows === 0) return res.status(404).json({ message: "Ad not found" });
