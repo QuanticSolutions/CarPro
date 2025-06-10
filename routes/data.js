@@ -711,10 +711,6 @@ const db = require("../database/connection");
 // });
 
 router.get('/models', async (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   try {
     db.query('SELECT * FROM models', (err, results) => {
       if (err) return res.status(500).json({ message: err });
@@ -729,10 +725,6 @@ router.get('/models', async (req, res) => {
 
 router.get('/trims/:model', (req, res) => {
   const { model } = req.params;
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   if (!model) {
     return res.status(400).json({ error: 'Model name is required' });
   }
@@ -752,12 +744,7 @@ router.get('/trims/:model', (req, res) => {
 });
 
 router.post('/trims', (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   const { trim, model_id } = req.body;
-  console.log(req.body)
   const insertQuery = `
       INSERT INTO trims (model_id, trim) 
       VALUES (?, ?)
@@ -770,13 +757,8 @@ router.post('/trims', (req, res) => {
 
 
 router.put('/trim/:id', (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   const { id } = req.params;
   const { trim, model_id } = req.body;
-  console.log(req.body)
 
   if (!id || isNaN(id)) {
     return res.status(400).json({ error: 'Valid trim ID is required' });
@@ -819,10 +801,6 @@ router.put('/trim/:id', (req, res) => {
 
 router.delete('/trim/:id', (req, res) => {
   const { id } = req.params;
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   if (!id || isNaN(id)) {
     return res.status(400).json({ error: 'Valid trim ID is required' });
   }
@@ -848,9 +826,6 @@ router.delete('/trim/:id', (req, res) => {
 
 router.get('/models', (req, res) => {
   const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   db.query('SELECT * FROM models', (err, modelResults) => {
     if (err) return res.status(500).json({ error: err.message });
 
@@ -863,10 +838,6 @@ router.get('/models', (req, res) => {
 
 router.delete('/models/:id', (req, res) => {
   const { id } = req.params;
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   db.query('SELECT * FROM models WHERE id = ?', [id], (err, modelResults) => {
     if (err) return res.status(500).json({ error: err.message });
 
@@ -888,10 +859,6 @@ router.delete('/models/:id', (req, res) => {
 router.put('/models/:id', (req, res) => {
   const { id } = req.params;
   const { make } = req.body;
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   db.query('SELECT * FROM models WHERE id = ?', [id], (err, modelResults) => {
     if (err) return res.status(500).json({ error: err.message });
 
@@ -917,10 +884,6 @@ router.put('/models/:id', (req, res) => {
 
 router.post('/models', (req, res) => {
   const { make } = req.body;
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   if (!make) {
     return res.status(400).json({ error: 'Name id required' });
   }

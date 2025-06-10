@@ -4,10 +4,6 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
     const { user_id, ad_id } = req.body;
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
-    }
     const query = 'INSERT INTO favourites (user_id, ad_id) VALUES (?, ?)';
     db.query(query, [user_id, ad_id], async (err, result) => {
         if (err) return res.status(500).json({ message: err });
@@ -18,10 +14,6 @@ router.post('/', (req, res) => {
 router.get('/user/:id', (req, res) => {
     const { id } = req.params;
     const query = 'SELECT * FROM favourites WHERE user_id = ? ORDER BY id DESC';
-    const token =  req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
-    }
     db.query(query, [id], (err, results) => {
         if (err) return res.status(500).json({ message: 'Error fetching favourites' });
         res.json(results);
@@ -30,10 +22,6 @@ router.get('/user/:id', (req, res) => {
 
 router.get('/ad/:ad_id', (req, res) => {
     const { ad_id } = req.params;
-    const token =  req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
-    }
     const query = 'SELECT * FROM favourites WHERE ad_id = ?';
     db.query(query, [ad_id], (err, results) => {
         if (err) return res.status(500).json({ message: 'Error fetching favourites' });
@@ -43,10 +31,6 @@ router.get('/ad/:ad_id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    const token =  req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
-    }
     const query = 'DELETE FROM favourites WHERE ad_id = ?';
     db.query(query, [id], (err, result) => {
         if (err) return res.status(500).json({ message: 'Error deleting favourites' });

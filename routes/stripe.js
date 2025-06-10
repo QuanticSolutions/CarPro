@@ -8,10 +8,6 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 router.post("/", async (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   const { amount, currency } = req.body;
 
   try {

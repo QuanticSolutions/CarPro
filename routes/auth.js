@@ -15,16 +15,28 @@ const apiKey = process.env.STREAM_API_KEY;
 const apiSecret = process.env.STREAM_API_SECRET;
 const serverClient = new StreamChat(apiKey, apiSecret);
 
+router.post('/logout', (req, res) => {
+
+    console.log('Cookie before clearing:', req.cookies);
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict',
+        path: '/'
+    });
+    return res.json({ message: 'Logged out' });
+});
+
 router.get('/check', (req, res) => {
-    const token =  req.cookies.token;
+    const token = req.cookies.token;
     if (!token) {
-        return res.status(401).json({ loggedIn: false, message: 'No token found' });
+        return res.status(401).json({ loggedIn: false, message: 'Invalid token' });
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({ loggedIn: true, user: decoded });
+        return res.json({ loggedIn: true, user: decoded });
     } catch (err) {
-        res.status(401).json({ loggedIn: false, message: 'Invalid token' });
+        return res.status(401).json({ loggedIn: false, message: 'Invalid token' });
     }
 });
 
@@ -147,6 +159,7 @@ router.post('/login', async (req, res) => {
             secure: false,
             sameSite: 'strict',
             maxAge: 3600000,
+            path: '/'
         });
         res.json({
             user,
@@ -156,15 +169,6 @@ router.post('/login', async (req, res) => {
     });
 });
 
-
-router.post('/logout', (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'strict'
-  });
-  res.json({ message: 'Logged out' });
-});
 
 router.put("/reset", async (req, res) => {
     const { email, password } = req.body;

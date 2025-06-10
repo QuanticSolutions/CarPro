@@ -59,10 +59,6 @@ const upload = multer({
 
 
 router.post('/upload/:id', upload.single('image'), (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   try {
     if (!req.file) {
       return res.status(400).send({ message: 'Please upload an image' });
@@ -82,10 +78,6 @@ router.post('/upload/:id', upload.single('image'), (req, res) => {
 });
 
 router.post('/uploads/:id', clearUserUploadDir, upload.array('images', 10), (req, res) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ loggedIn: false, message: 'No token found' });
-  }
   try {
     console.log(req.files)
     if (!req.files || req.files.length === 0) {
